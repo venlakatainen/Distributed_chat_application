@@ -1,18 +1,16 @@
 import socket
 import threading
 
+clients = set()
+
 # function receive data from the client socket
 def connect_socket(conn):
     while True:
         # receive data from the socket
         received_data = conn.recv(1024).decode()
-        if not received_data:
-            break
-        # print received, decoded, data 
-        else:
-            print(received_data)
+        print(received_data)
     
-    conn.close()
+    
 
 # function to send data 
 def send_message(conn):
@@ -24,24 +22,30 @@ def send_message(conn):
 
 
 
+# function to handle coming connections
+def handle_connections(s):
+    while True:
+        coming_socket, coming_address = s.accept()
+        print("Connection from: ", coming_address)
+        
+        # Start a thread to handle the incoming connection
+        receive_thread = threading.Thread(target=connect_socket, args=([coming_socket]))
+        receive_thread.start()
+
+        send_thread = threading.Thread(target = send_message, args = ([coming_socket]))
+        send_thread.start()
+
+
+
 if __name__ == '__main__':
     # create socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # set IP address and port to the socket
-    s.bind(('', 11111))
+    s.bind(('127.0.0.1', 11111))
     # listen connections from clients
-    s.listen()
-    # when client connects, accept the connection
-    (client_conn, client_addr) = s.accept() 
-    print("Connection from: ", client_addr)
-    # create thread for connection process
-    thread1 = threading.Thread(target = connect_socket, args = ([client_conn]))
-    # create thread for message sending process
-    thread2 = threading.Thread(target = send_message, args = ([client_conn]))
-    #start both threads
-    thread1.start()
-    thread2.start()
-    # end both threads
-    thread1.join()
-    thread2.join()
+    s.listen(4)
 
+    # handle coming client connections
+    coming_connection = threading.Thread(target=handle_connections, args=([s]))
+    coming_connection.start()
+    
