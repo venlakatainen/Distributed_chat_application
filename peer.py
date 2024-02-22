@@ -25,12 +25,13 @@ def send_message(s):
     # encode message taken from the input
     message = input("Enter message: ")
     msg_to_send = message.encode('utf-8')
-    # send message
-    s.sendall(msg_to_send)
-    if message.lower() == "quit":
-        s.close()
-        
-    s.close()
+    for i in range(len(s)):
+        # send message
+        s[i].sendall(msg_to_send)
+        if message.lower() == "quit":
+            s[i].close()
+            
+        s[i].close()
 
 # function to handle coming connections
 def handle_connections(s):
@@ -130,15 +131,22 @@ if __name__ == '__main__':
     peer_address = "127.0.0.1" #input("Enter IP address of the friend: ")
     
     while True:
-        peer_port = int(input("Enter port of the friend: "))
+        #peer_port = int(input("Enter port of the friend: "))
+        num_of_ports = int(input("Enter number of ports: "))
+        ports = list(map(int, input("\nEnter the ports : ").strip().split()))[:num_of_ports]
         # Connect to the other peer
         print("Connection establishment started...")
-        peer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        peer_socket.connect((peer_address, peer_port))
+        sockets = []
+        for i in range(len(ports)):
+            peer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            peer_socket.connect((peer_address, ports[i]))
+            sockets.append(peer_socket)
+        
         print("Connected to: ", peer_address)
 
         # create thread to send messages
-        send_message(peer_socket)
+        
+        send_message(sockets)
         #send_message_thread = threading.Thread(target = send_message, args = ([peer_socket]))
         # start thread
         #send_message_thread.start()
