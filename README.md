@@ -18,7 +18,7 @@ Then to send messages, type the other peer ip and port as well.
 
 # Industry track
 
-## Project Title
+## Project Title: Distributed chat application
 
 ## About the project
 ## Implemented components:
