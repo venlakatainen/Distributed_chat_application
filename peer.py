@@ -167,7 +167,7 @@ if __name__ == '__main__':
             send_message(sockets, own_ip)
         
         else:
-            print("No available sockets added.")
+            print("No available sockets added, message cannot be sent.")
         #send_message_thread = threading.Thread(target = send_message, args = ([peer_socket]))
         # start thread
         #send_message_thread.start()
