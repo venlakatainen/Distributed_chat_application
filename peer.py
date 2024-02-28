@@ -25,6 +25,8 @@ def receive_data(s):
         #print(s.getsockname()[0], ": ", received_msg)
         s.close()
 
+
+
 # function to send messages
 def send_message(s, sender_ip):
     #while True:
@@ -45,8 +47,11 @@ def send_message(s, sender_ip):
             
         s[i].close()
 
+
+
 # function to handle coming connections
 def handle_connections(s):
+    
     while True:
         coming_socket, coming_address = s.accept()
         print(f"Connection from: {coming_address}")
@@ -58,11 +63,20 @@ def handle_connections(s):
 
 # function to handle connection to the server
 def handle_server_connection(s):
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.connect(('127.0.0.1', 11111))
-    server_socket.send("I am CLIENT\n".encode())
-    from_server = server_socket.recv(1024).decode()
-    print(from_server)
+    #server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(('127.0.0.1', 11111))
+    while True:
+        message = input("Enter message: ")
+        msg_to_send = message.encode('utf-8')
+
+        s.send(msg_to_send)
+        
+        listen_server_thread = threading.Thread(target=handle_connections, args=([s]))
+        listen_server_thread.start()
+            #server_socket.send("I am CLIENT\n".encode())
+        #from_server = s.recv(1024).decode()
+        #print(from_server)
+
 
 
 
@@ -110,9 +124,12 @@ if __name__ == '__main__':
     connection_handle_thread.start()
 
     # start thread to handle connection to the server
-    #server_thread = threading.Thread(target=handle_server_connection, args=([me]))
-    #server_thread.start()
-
+    
+    server_thread = threading.Thread(target=handle_server_connection, args=([me]))
+    server_thread.start()
+    
+    #listen_server_thread = threading.Thread(target=handle_connections, args=([me]))
+    #listen_server_thread.start()
     # selection to group or private message
     #select = input("If you want to send group message - write 1 \n If you want to send private message - write 2")
     """
@@ -141,6 +158,9 @@ if __name__ == '__main__':
     #print("Private message selected. ")
     # handle private message transmission
     # Connect to another peer
+    
+    ######################## WORKING PART BELOW ######################################################
+    """
     peer_address = "127.0.0.1" #input("Enter IP address of the friend: ")
     
     while True:
@@ -172,4 +192,4 @@ if __name__ == '__main__':
         # start thread
         #send_message_thread.start()
 
-    
+    """
