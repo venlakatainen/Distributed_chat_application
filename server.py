@@ -8,26 +8,30 @@ import pickle
 
 # function receive data from the client socket
 def receive_data(conn, address):
-    #while True:
+    while True:
         # receive message
-    received_msg = conn.recv(1024).decode()
-    time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    
-    #if received_msg == "":
-    #    continue
-
-    # print message and address who send the message
-    print(f"{time} {address[0]} : {received_msg}")
-
-    if "/join" in received_msg:
-        received_msg.replace(" ", "")
-        group_to_join = received_msg.replace("/join","")
+        received_msg = conn.recv(1024).decode()
+        time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
-        #conn.send("got join message".encode())
-        join_group(group_to_join, address[0], address[1])
-        conn.close()
+        if received_msg == "":
+            continue
+
+        # print message and address who send the message
+        print(f"{time} {address[0]} : {received_msg}")
+
+        # if message contains /join, the peer wants to join group
+        if "/join" in received_msg:
+            received_msg.replace(" ", "")
+            group_to_join = received_msg.replace("/join","")
+            
+            group_info = join_group(group_to_join, address[0], address[1])
+            print(group_info)
+            data=pickle.dumps(group_info)
+            # send group members back to the peer
+            conn.send(data)
+            
     
-    #conn.close()
+    
         
            
     
@@ -58,14 +62,19 @@ def join_group (group_name, socket_ip, socket_port):
     else:
         groups[group_name] = [(socket_ip, socket_port)]
 
-    print(groups)
+    temp_groups = groups
 
     # update group information to the file
     with open('groups_server.txt', 'w') as convert_file: 
         convert_file.write(json.dumps(groups))
 
     # send group information for the peer that joined and other group members.
+    group_members = temp_groups[group_name]
+    # return group members of the group that peer wanted to join
+    return group_members 
     
+    
+def update_group_members (groups, group_name):
     peers_list = groups[group_name]
     # list for sockets
     sockets = []

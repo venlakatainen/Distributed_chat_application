@@ -2,7 +2,7 @@ import socket
 import threading
 import sys
 from datetime import datetime
-
+import pickle
 
 
 # function to receive data
@@ -65,17 +65,17 @@ def handle_connections(s):
 def handle_server_connection(s):
     #server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(('127.0.0.1', 11111))
-    while True:
-        message = input("Enter message: ")
-        msg_to_send = message.encode('utf-8')
+    #while True:
+    message = input("Enter message: ")
+    msg_to_send = message.encode('utf-8')
 
-        s.send(msg_to_send)
+    s.send(msg_to_send)
         
-        listen_server_thread = threading.Thread(target=handle_connections, args=([s]))
-        listen_server_thread.start()
+        #listen_server_thread = threading.Thread(target=handle_connections, args=([s]))
+        #listen_server_thread.start()
             #server_socket.send("I am CLIENT\n".encode())
-        #from_server = s.recv(1024).decode()
-        #print(from_server)
+    from_server = pickle.loads(s.recv(1024))
+    print(from_server)
 
 
 
@@ -115,21 +115,20 @@ if __name__ == '__main__':
     # set IP address and port to the socket
     me.bind((own_ip, own_port))
     # listen connections from other peers
-    me.listen(5)
+    #me.listen(5)
 
     print("Peer listening on {}:{}\n\n".format(own_ip, own_port))
 
     # start thread to handle incoming connections
-    connection_handle_thread = threading.Thread(target=handle_connections, args=([me]))
-    connection_handle_thread.start()
+    #connection_handle_thread = threading.Thread(target=handle_connections, args=([me]))
+    #connection_handle_thread.start()
 
     # start thread to handle connection to the server
     
     server_thread = threading.Thread(target=handle_server_connection, args=([me]))
     server_thread.start()
     
-    #listen_server_thread = threading.Thread(target=handle_connections, args=([me]))
-    #listen_server_thread.start()
+
     # selection to group or private message
     #select = input("If you want to send group message - write 1 \n If you want to send private message - write 2")
     """
