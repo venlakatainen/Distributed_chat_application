@@ -3,24 +3,37 @@ import threading
 import sys
 from datetime import datetime
 import pickle
+import json
 
 
 # function to receive data
-def receive_data(s):
-    # receive message
-
-    received_msg = s.recv(1024).decode()
-    time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    socket_name = s.getsockname()[0]
+def receive_data(s, address):
     
-    # if message is quit, close the connection
-    if (received_msg.lower() == "quit"):
-        print(f"{time} {socket_name} left from the chat.")
-        s.close()
-        
+    # message from server
+    if address[1] == 11112:
+        # load data
+        received_msg = pickle.loads(s.recv(1024))
+        # send ack
+        s.sendall("ack".encode())
+        # update group members
+        handle_groups(received_msg[0], received_msg[1])
+    
     else:
-        print(f"{time} {socket_name} : {received_msg}")
-        s.close()
+        # receive message
+        received_msg = s.recv(1024).decode()
+        # send ack
+        s.sendall("ack".encode())
+        time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        socket_name = s.getsockname()[0]
+        
+        # if message is quit, close the connection
+        if (received_msg.lower() == "quit"):
+            print(f"{time} {socket_name} left from the chat.")
+           
+            
+        else:
+            print(f"{time} {socket_name} : {received_msg}")
+            
     
 
 
@@ -35,6 +48,7 @@ def send_message(s, sender_ip, message):
     time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print(f"{time} {sender_ip} : {message}")    
     s.sendall(msg_to_send)
+
     
 
 
@@ -47,10 +61,44 @@ def handle_connections(s):
         print(f"Connection from: {coming_address}")
     
         # Start a thread to handle the incoming connection
-        receive_thread = threading.Thread(target=receive_data, args=([coming_socket]))
+        receive_thread = threading.Thread(target=receive_data, args=([coming_socket, coming_address]))
         receive_thread.start()
 
 
+
+
+# handle groups
+def handle_groups (group_name, member_info):
+
+    # create file name based on ip and port
+    file_name = own_ip + str(own_port) + ".txt"
+    
+    # read group information from file or create file if it does not exists
+    with open(file_name, "a+") as group_information: 
+        data = group_information.read() 
+    
+    # reconstructing the data as a dictionary 
+    # if file already has info    
+    if data != "":    
+        groups = json.loads(data)
+    # create dictionary if file is empty
+    else:
+        groups = {}
+
+    # check if group already exists
+    if group_name in groups:
+        # update group members
+        groups[group_name] = member_info
+     
+    # if the group not exists, create group and add members to group
+    else:
+        groups[group_name] = member_info
+
+    # update group information to the file
+    with open(file_name, 'w') as convert_file: 
+        convert_file.write(json.dumps(groups))
+
+    
 
 
 # function to handle connection to the server
@@ -68,12 +116,22 @@ def handle_server_connection():
     # encode message
     msg_to_send = message.encode('utf-8')
     # send message to the server
-    server_socket.send(msg_to_send)
+    server_socket.sendall(msg_to_send)
     # receive group info from the server
     from_server = pickle.loads(server_socket.recv(1024))
+    server_socket.sendall("ack".encode())
     # print group info
     time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print(f"{time} : {from_server}") 
+
+    # group name
+    message.replace(" ", "")
+    group_to_join = message.replace("/join","")
+
+    # update group information
+    handle_groups(group_to_join, from_server)
+
+
     
 
 
@@ -137,7 +195,3 @@ if __name__ == '__main__':
                     print(f" Port {ports[i]} not available.")
                     continue
 
-                
-
-
-        

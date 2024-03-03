@@ -11,12 +11,14 @@ groups = {}
 def receive_data(conn, address):
 
     # receive message
+    
     received_msg = conn.recv(1024).decode()
+
     time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
     if received_msg != "":
         # print message and address who send the message
-        print(f"{time} {address[0]} : {received_msg}")
+        print(f"{time} {address} : {received_msg}")
 
 
     # if message contains /join, the peer wants to join group
@@ -28,7 +30,7 @@ def receive_data(conn, address):
         print(group_info)
         data=pickle.dumps(group_info)
         # send group members back to the peer
-        conn.send(data)
+        conn.sendall(data)
         update_group_members(group_to_join, group_info)
             
     
@@ -79,6 +81,7 @@ def update_group_members (name_of_the_group, mem_of_group):
         print(peer_port)
         try:
             peer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            peer_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             peer_socket.bind((server_ip, server_port+1))
             peer_socket.connect((peer_address,peer_port))
             send_message(name_of_the_group, mem_of_group, peer_socket)
@@ -95,11 +98,15 @@ def update_group_members (name_of_the_group, mem_of_group):
 # send message to group 
 def send_message(group_name, group_members, group_member_socket):
     
-    # add group name to the first of the member list
-    group_members_group_name = (group_name, group_members)
+    
+    message = (group_name, group_members)
+    data=pickle.dumps(message)
+    print(data)
+    # encode message taken from the input
+    #msg_to_send = message.encode('utf-8')
 
     # send data to sockets 
-    group_member_socket.send(str(group_members_group_name).encode())
+    group_member_socket.sendall(data)
    
        
         
