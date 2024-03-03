@@ -23,7 +23,7 @@ def receive_data(conn, address):
 
     # if message contains /join, the peer wants to join group
     if "/join" in received_msg:
-        received_msg.replace(" ", "")
+        received_msg = received_msg.replace(" ", "")
         group_to_join = received_msg.replace("/join","")
         # add peer to the group
         group_info = join_group(group_to_join, address[0], str(int(address[1])-2))
@@ -32,30 +32,90 @@ def receive_data(conn, address):
         # send group members back to the peer
         conn.sendall(data)
         update_group_members(group_to_join, group_info)
-            
     
+    elif "/leave" in received_msg:
+        received_msg = received_msg.replace(" ", "")
+        group_to_leave = received_msg.replace("/leave","")
+        group_info = leave_from_group(group_to_leave, address[0], str(int(address[1])-2))
+        
+        if group_info == False:
+            data=pickle.dumps("leaving not succesfull")
+            conn.sendall(data)
+            
+        else:
+            print("removed from the group")
+            # send done mark to the peer
+            data=pickle.dumps("/leavingdone")
+            conn.sendall(data)
+            update_group_members(group_to_leave, group_info)
+
+
+# function to handle group leaving
+def leave_from_group (group_name, socket_ip, socket_port):
+
+    # read group information from file
+    with open('groups_server.txt') as group_file: 
+        data = group_file.read()
+    
+
+    # reconstructing the data as a dictionary 
+    # if file already has info    
+    if data == "":    
+        print("groups empty dict created")
+        groups = {}
+        
+    # create dictionary if file is empty
+    else:
+        print("groups read from file")
+        groups = json.load(data)
+
+    # check if group exists
+    if group_name in groups:
+        # remove member from group if member in group
+        members = groups[group_name]
+        if [socket_ip, socket_port] in members:
+            members.remove([socket_ip, socket_port])
+            groups[group_name] = members
+     
+    else:
+        return False
+
+    # update group information to the file
+    with open('groups_server.txt', 'w') as convert_file: 
+        convert_file.write(json.dumps(groups))
+
+    return members
+
 
 # function to handle joining groups -> add peer to the group  
 def join_group (group_name, socket_ip, socket_port):
 
     # read group information from file
     with open('groups_server.txt') as group_file: 
-        data = group_file.read() 
+        data = group_file.read()
     
     # reconstructing the data as a dictionary 
     # if file already has info    
-    if data != "":    
-        groups = json.loads(data)
+    if data == "":    
+        print("groups empty dict created")
+        groups = {}
+        
     # create dictionary if file is empty
     else:
-        groups = {}
+        print("groups read from file")
+        groups = json.load(data)
 
     # check if group already exists
     if group_name in groups:
-        # add the new member to the group
         members = groups[group_name]
-        members.append((socket_ip, socket_port))
-        groups[group_name] = members
+        # check if peer already in group
+        if (socket_ip, socket_port) in members:
+            return members
+        
+        else:
+            # add the new member to the group
+            members.append((socket_ip, socket_port))
+            groups[group_name] = members
      
     # if the group not exists, create group and add member to group
     else:
@@ -97,8 +157,7 @@ def update_group_members (name_of_the_group, mem_of_group):
 
 # send message to group 
 def send_message(group_name, group_members, group_member_socket):
-    
-    
+
     message = (group_name, group_members)
     data=pickle.dumps(message)
     print(data)

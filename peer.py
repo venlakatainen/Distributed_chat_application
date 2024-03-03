@@ -70,20 +70,24 @@ def handle_connections(s):
 # handle groups
 def handle_groups (group_name, member_info):
 
-    # create file name based on ip and port
-    file_name = own_ip + str(own_port) + ".txt"
-    
     # read group information from file or create file if it does not exists
     with open(file_name, "a+") as group_information: 
-        data = group_information.read() 
+        data = group_information.read()
     
+
     # reconstructing the data as a dictionary 
     # if file already has info    
-    if data != "":    
-        groups = json.loads(data)
+    if data == "":    
+        print("groups empty dict created")
+        groups = {}
+        
     # create dictionary if file is empty
     else:
-        groups = {}
+        print("groups read from file")
+        print(data)
+        print(type(data))
+        groups = json.load(data)
+        
 
     # check if group already exists
     if group_name in groups:
@@ -118,6 +122,7 @@ def handle_server_connection():
     # send message to the server
     server_socket.sendall(msg_to_send)
     # receive group info from the server
+    
     from_server = pickle.loads(server_socket.recv(1024))
     server_socket.sendall("ack".encode())
     # print group info
@@ -125,12 +130,57 @@ def handle_server_connection():
     print(f"{time} : {from_server}") 
 
     # group name
-    message.replace(" ", "")
-    group_to_join = message.replace("/join","")
+    if "/join" in message:
+        message = message.replace(" ", "")
+        group_to_join = message.replace("/join","")
 
-    # update group information
-    handle_groups(group_to_join, from_server)
+        # update group information
+        handle_groups(group_to_join, from_server)
 
+    elif "/leave" in message:
+        if "/leavingdone" == from_server:
+            message = message.replace(" ", "")
+            group_to_leave = message.replace("/leave","")
+            
+            if leave_from_group(group_to_leave) == False:
+                print("leaving not succeded")
+            else:    
+                print(f"You left from group {group_to_leave}")
+        
+        else:
+            print(from_server)
+
+
+def leave_from_group (group_name):
+
+    # read group information from file
+    with open(file_name, "a+") as group_file: 
+        data = group_file.read()
+    
+
+    # reconstructing the data as a dictionary 
+    # if file already has info    
+    if data == "":    
+        print("groups empty dict created")
+        groups = {}
+        
+    # create dictionary if file is empty
+    else:
+        print("groups read from file")
+        groups = json.load(data)
+    
+
+    # check if group exists
+    if group_name in groups:
+       groups.pop(group_name)
+     
+    else:
+        print("pop false")
+        return False
+
+    # update group information to the file
+    with open(file_name, 'w') as convert_file: 
+        convert_file.write(json.dumps(groups))
 
     
 
@@ -144,7 +194,10 @@ if __name__ == '__main__':
 
     own_ip = "127.0.0.1" #input("Enter your own IP: ")
     own_port = int(sys.argv[1]) #int(input("Enter your port: "))
-
+    
+    # create filename to save group information
+    file_name = own_ip + str(own_port) + ".txt"
+    
     # create socket
     me = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # set IP address and port to the socket
