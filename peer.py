@@ -4,6 +4,7 @@ import sys
 from datetime import datetime
 import pickle
 import json
+import os
 
 
 # function to receive data
@@ -11,12 +12,13 @@ def receive_data(s, address):
     
     # message from server
     if address[1] == 11112:
+        print("data coming from the server")
         # load data
         received_msg = pickle.loads(s.recv(1024))
         # send ack
         s.sendall("ack".encode())
         # update group members
-        handle_groups(received_msg[0], received_msg[1])
+        server_update_group_info(received_msg[0], received_msg[1])
     
     else:
         # receive message
@@ -64,34 +66,18 @@ def handle_connections(s):
         receive_thread = threading.Thread(target=receive_data, args=([coming_socket, coming_address]))
         receive_thread.start()
 
-
-
-
 # handle groups
-def handle_groups (group_name, member_info):
+def server_update_group_info (group_name, member_info):
 
     # read group information from file or create file if it does not exists
-    with open(file_name, "a+") as group_information: 
-        data = group_information.read()
+    with open(file_name) as group_file:
+        data = json.load(group_file)
+
+    groups = data
     
-
-    # reconstructing the data as a dictionary 
-    # if file already has info    
-    if data == "":    
-        print("groups empty dict created")
-        groups = {}
-        
-    # create dictionary if file is empty
-    else:
-        print("groups read from file")
-        print(data)
-        print(type(data))
-        groups = json.load(data)
-        
-
     # check if group already exists
-    if group_name in groups:
-        # update group members
+    if group_name in groups.keys():
+        print("found group from file")
         groups[group_name] = member_info
      
     # if the group not exists, create group and add members to group
@@ -99,9 +85,36 @@ def handle_groups (group_name, member_info):
         groups[group_name] = member_info
 
     # update group information to the file
-    with open(file_name, 'w') as convert_file: 
-        convert_file.write(json.dumps(groups))
+    #group_file.write(json.dumps(groups))
+    group_file = open(file_name, "w")
+    data = json.dump(groups, group_file)
+    group_file.close()
+    
 
+
+# handle groups
+def handle_groups (group_name, member_info):
+
+    # read group information from file or create file if it does not exists
+    with open(file_name) as group_file:
+        data = json.load(group_file)
+
+    groups = data
+    
+    # check if group already exists
+    if group_name in groups.keys():
+        print("found group from file")
+        groups[group_name] = member_info
+     
+    # if the group not exists, create group and add members to group
+    else:
+        groups[group_name] = member_info
+
+    # update group information to the file
+    group_file = open(file_name, "w")
+    data = json.dump(groups, group_file)
+    group_file.close()
+    print("group handling done")
     
 
 
@@ -154,34 +167,27 @@ def handle_server_connection():
 def leave_from_group (group_name):
 
     # read group information from file
-    with open(file_name, "a+") as group_file: 
-        data = group_file.read()
-    
+    with open(file_name) as group_file:
+        data = json.load(group_file)
 
-    # reconstructing the data as a dictionary 
-    # if file already has info    
-    if data == "":    
-        print("groups empty dict created")
-        groups = {}
-        
-    # create dictionary if file is empty
-    else:
-        print("groups read from file")
-        groups = json.load(data)
-    
+    groups = data
 
     # check if group exists
-    if group_name in groups:
+    if group_name in groups.keys():
        groups.pop(group_name)
      
     else:
         print("pop false")
         return False
 
+    
     # update group information to the file
-    with open(file_name, 'w') as convert_file: 
-        convert_file.write(json.dumps(groups))
-
+    group_file = open(file_name, "w")
+    data = json.dump(groups, group_file)
+    group_file.close()
+    
+    
+    
     
 
 
@@ -197,7 +203,18 @@ if __name__ == '__main__':
     
     # create filename to save group information
     file_name = own_ip + str(own_port) + ".txt"
-    
+
+    if os.path.exists(file_name) == False:
+        group_file = open(file_name, "x")
+        group_file.close()
+
+    if os.stat(file_name).st_size == 0:
+        groups = {}
+
+        group_file = open(file_name, "w")
+        json.dump(groups, group_file)
+        group_file.close()
+
     # create socket
     me = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # set IP address and port to the socket
