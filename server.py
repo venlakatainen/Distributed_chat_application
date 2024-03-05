@@ -12,9 +12,12 @@ import os
 def receive_data(conn, address):
 
     # receive message
+    try:
+        received_msg = conn.recv(1024).decode()
+    except ConnectionResetError:
+        # if peer close the connection
+        return
     
-    received_msg = conn.recv(1024).decode()
-
     time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
     if received_msg != "":
@@ -68,7 +71,10 @@ def leave_from_group (group_name, socket_ip, socket_port):
         if [socket_ip, socket_port] in members:
             members.remove([socket_ip, socket_port])
             groups[group_name] = members
-     
+            # remove group if there is no members anymore
+            if len(groups[group_name]) == 0:
+                groups.pop(group_name)
+
     else:
         return False
 

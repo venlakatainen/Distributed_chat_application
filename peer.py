@@ -18,7 +18,7 @@ def receive_data(s, address):
         # send ack
         s.sendall("ack".encode())
         # update group members
-        server_update_group_info(received_msg[0], received_msg[1])
+        handle_groups(received_msg[0], received_msg[1])
     
     else:
         # receive message
@@ -41,14 +41,11 @@ def receive_data(s, address):
 
 
 # function to send messages
-def send_message(s, sender_ip, message):
+def send_message(s, message):
     
     # encode message taken from the input
     msg_to_send = message.encode('utf-8')
 
-    # show sent message to sender terminal as well
-    time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    print(f"{time} {sender_ip} : {message}")    
     s.sendall(msg_to_send)
 
     
@@ -66,30 +63,6 @@ def handle_connections(s):
         receive_thread = threading.Thread(target=receive_data, args=([coming_socket, coming_address]))
         receive_thread.start()
 
-# handle groups
-def server_update_group_info (group_name, member_info):
-
-    # read group information from file or create file if it does not exists
-    with open(file_name) as group_file:
-        data = json.load(group_file)
-
-    groups = data
-    
-    # check if group already exists
-    if group_name in groups.keys():
-        print("found group from file")
-        groups[group_name] = member_info
-     
-    # if the group not exists, create group and add members to group
-    else:
-        groups[group_name] = member_info
-
-    # update group information to the file
-    #group_file.write(json.dumps(groups))
-    group_file = open(file_name, "w")
-    data = json.dump(groups, group_file)
-    group_file.close()
-    
 
 
 # handle groups
@@ -127,7 +100,13 @@ def handle_server_connection():
     # bind socket to certain ip + port
     server_socket.bind((own_ip, own_port+2))
     # connect to the server
-    server_socket.connect(('127.0.0.1', 11111))
+    try:
+        server_socket.connect(('127.0.0.1', 11111))
+    
+    except ConnectionRefusedError:
+        print("Server currently not available")
+        return 
+
     # enter join / leave message
     message = input("Enter message: ")
     # encode message
@@ -164,6 +143,8 @@ def handle_server_connection():
             print(from_server)
 
 
+
+
 def leave_from_group (group_name):
 
     # read group information from file
@@ -187,6 +168,28 @@ def leave_from_group (group_name):
     group_file.close()
     
     
+
+# create sockets for group message    
+def sockets_for_group_members(mem_of_group, msg):
+    
+    # create sockets for all group members
+    for i in range(len(mem_of_group)):
+        peer_address = mem_of_group[i][0]
+        peer_port = int(mem_of_group[i][1])
+        print(peer_port)
+        try:
+            peer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            peer_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            peer_socket.bind((own_ip, own_port+1))
+            peer_socket.connect((peer_address,peer_port))
+            send_message(peer_socket, msg)
+            
+        except ConnectionRefusedError:
+            print(f"{mem_of_group[i]} not available.")
+            continue
+
+        
+    print("group info sent")
     
     
 
@@ -230,7 +233,7 @@ if __name__ == '__main__':
 
     while True:
         
-        select = input("Join/leave group, select 1 \n send message, select 2 \n -> ")
+        select = input("Join/leave group, select 1 \n send group message, select 2 \n Send private message, select 3 \n-> ")
         
         # handle group joining / leaving
         
@@ -239,29 +242,39 @@ if __name__ == '__main__':
             handle_server_connection()
         
         
-        # handle message sending to other peers
-
+        # group message
         if (select == "2"):
             
-            peer_address = "127.0.0.1" #input("Enter IP address of the friend: ")
-  
-            #peer_port = int(input("Enter port of the friend: "))
-            num_of_ports = int(input("Enter number of ports: "))
-            ports = list(map(int, input("\nEnter the ports : ").strip().split()))[:num_of_ports]
+            group_to_send_message = input("Enter group name: ")
             message = input("Enter message: ")
-            # Connect to the other peer
-            print("Connection establishment started...")
-            
-            for i in range(len(ports)):
-                
-                try:
-                    peer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    peer_socket.bind((own_ip, own_port+1))
-                    peer_socket.connect((peer_address, ports[i]))
-                    send_message(peer_socket,own_ip,message)
-                    
-                
-                except ConnectionRefusedError:
-                    print(f" Port {ports[i]} not available.")
-                    continue
 
+            with open(file_name) as group_file:
+                data = json.load(group_file)
+
+            groups = data
+
+            if group_to_send_message in groups.keys():
+                members = groups[group_to_send_message]
+                sockets_for_group_members(members, message)
+            
+            else:
+                print("Group not found")
+
+        # private message
+        if (select == "3"):
+
+            peer_address = "127.0.0.1" #input("Enter IP address of the friend: ")
+            peer_port = int(input("Enter port of the friend: "))
+            message = input("Enter message: ")
+
+            try:
+                peer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                peer_socket.bind((own_ip, own_port+1))
+                peer_socket.connect((peer_address, peer_port))
+                send_message(peer_socket,message)
+                
+                
+            except ConnectionRefusedError:
+                print(f" Port {peer_port} not available.")
+                continue
+            
