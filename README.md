@@ -98,7 +98,7 @@ First, you should check that needed Python libraries are installed.
 
 The needed libraries are: socket, threading, sys, datetime, pickle, json, os
 
-To run application, use cmd to run client.py script. When starting the application the script asks you to input your IP address and port that can be used to connect sockets. Please note, that the script uses also port input - 1 to run sockets. Also, if you want to use group message functionality and you have not joined group before, the server script is needed as well. In commercial application, the script should be run by the service provider but in our more like proof-of-concept case, some user should run the server script.
+To run application, use cmd to run client.py script. When starting the application the script asks you to input your IP address and port that can be used to connect sockets. Please note, that the script uses also port input +1 to run sockets. Also, if you want to use group message functionality and you have not joined group before, the server script is needed as well. In commercial application, the script should be run by the service provider but in our more like proof-of-concept case, some user should run the server script.
 
 When you have started the application and input your IP address and port, you can choose if you want to join/leave group, send group message or send private message. If you select group joining/leaving, you need to input the group that you want to join/leave. The server sends the other group members back to you if the joining was successful and there was other members in the group already. Also, the other group members are informed of your joining or leaving.
 
