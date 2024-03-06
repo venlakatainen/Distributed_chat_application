@@ -34,9 +34,49 @@ Detailed descriptions of relevant principles covered in the course (architecture
 
 Our course project is distributed peer-to-peer chat application. Using our application you can send messages using distribution. The peers can communicate directly to each other and the server is used only for the group handling.
 
+
+
+Architecture:
+
 Our application consists of one server and peers which are communication partners. The server can listen maximum of five peers so the total count of the nodes is max six. However, the application is scalable because the listening count of the server can be increased. The server is handling group joining and leaving functionality. Because the architecture is distributed peer-to-peer, peers do not need server to send or receive messages to other peers.
 
-The peers and server changes information using TCP protocol. For the communication, the IP address and port are needed to connect to the peer. We have added error handling to communication if group member (peer) or server is not available for the communication. 
+
+
+Communication:
+
+The peers and server changes information using TCP protocol. For the communication, the IP address and port are needed to connect to the peer. We have added error handling to communication if group member (peer) or server is not available for the communication. The interaction pattern in the application is object-based.
+
+
+
+Naming:
+
+The peers needs the IP address and ports for communication. The naming scheme is attribute-based due to server's need to differentiate each peer. Also, the private message peers are identified using IPs and ports. However,the IP addresses and ports as a name of the peer can be seen also as a flat names, because those are not so human readable.
+
+
+
+Coordination:
+
+The peer handles coming messages so that the peers that connect to the peer first sends their message first and so on. The messages are shown for the users with timestamps in receiving order so the order is chronologic.
+
+
+
+Consistency and Replication:
+
+The application uses data-centric consistency model and data replication is used as well, because instead of saving the group information only in the server, also the peers have information of the group members. Also, because the server update all the group members at the same time and right away of the group changes (someone joins or leaves from the group), the replication can be seen active. Instead of using database as storage (due to already used project hours) the information of the group members is saved to text file as a json object.
+
+
+
+Fault Tolerance:
+
+We have implemented error handling for the situation where the peer or the server is not available. TCP protocol has built-in fault mitigation that simplifies our work.
+
+
+
+Security:
+
+If the application would be commercial, it absolutely should use end-to-end encrpytion in communication but unfortunately we did not have enough time to implement that.
+
+
 
 ## Built with:
 Detailed description of the system functionality and how to run the implementation 
