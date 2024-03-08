@@ -4,6 +4,7 @@ import json
 from datetime import datetime
 import pickle
 import os
+import logging
 
 
 
@@ -12,17 +13,20 @@ import os
 def receive_data(conn, address):
 
     # receive message
+    time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     try:
         received_msg = conn.recv(1024).decode()
+
     except ConnectionResetError:
         # if peer close the connection
+        logging.info(f"{time} Peer closed the connection")
         return
     
-    time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
     if received_msg != "":
         # print message and address who send the message
-        print(f"{time} {address} : {received_msg}")
+        logging.info(f"{time} {address} : {received_msg}")
+
 
 
     # if message contains /join, the peer wants to join group
@@ -31,11 +35,17 @@ def receive_data(conn, address):
         group_to_join = received_msg.replace("/join","")
         # add peer to the group
         group_info = join_group(group_to_join, address[0], str(int(address[1])-2))
-        print(group_info)
-        data=pickle.dumps(group_info)
-        # send group members back to the peer
-        conn.sendall(data)
-        update_group_members(group_to_join, group_info)
+        if group_info == False:
+            data=pickle.dumps("already in group")
+            conn.sendall(data)
+            
+        else:    
+            logging.info(group_info)
+            print(group_info)
+            data=pickle.dumps(group_info)
+            # send group members back to the peer
+            conn.sendall(data)
+            update_group_members(group_to_join, group_info)
     
     elif "/leave" in received_msg:
         received_msg = received_msg.replace(" ", "")
@@ -43,11 +53,12 @@ def receive_data(conn, address):
         group_info = leave_from_group(group_to_leave, address[0], str(int(address[1])-2))
         
         if group_info == False:
+            logging.info("Peer leaving not done")
             data=pickle.dumps("leaving not succesfull")
             conn.sendall(data)
             
         else:
-            print("removed from the group")
+            logging.info("Peer removed from the group")
             # send done mark to the peer
             data=pickle.dumps("/leavingdone")
             conn.sendall(data)
@@ -98,8 +109,9 @@ def join_group (group_name, socket_ip, socket_port):
     if group_name in groups.keys():
         members = groups[group_name]
         # check if peer already in group
-        if (socket_ip, socket_port) in members:
-            return members
+        print(members)
+        if [socket_ip, socket_port] in members:
+            return False
         
         else:
             # add the new member to the group
@@ -111,8 +123,7 @@ def join_group (group_name, socket_ip, socket_port):
         groups[group_name] = [(socket_ip, socket_port)]
 
     # update group information to the file
-    
-    # update group information to the file
+
     group_file = open(server_file, "w")
     data = json.dump(groups, group_file)
     group_file.close()
@@ -131,7 +142,7 @@ def update_group_members (name_of_the_group, mem_of_group):
     for i in range(len(mem_of_group)):
         peer_address = mem_of_group[i][0]
         peer_port = int(mem_of_group[i][1])
-        print(peer_port)
+       
         try:
             peer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             peer_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -140,11 +151,11 @@ def update_group_members (name_of_the_group, mem_of_group):
             send_message(name_of_the_group, mem_of_group, peer_socket)
             
         except ConnectionRefusedError:
-            print(f"{mem_of_group[i]} not available.")
+            logging.info(f"{mem_of_group[i]} not available.")
             continue
 
         
-    print("group info sent")
+    logging.info("group info sent")
 
 
 
@@ -153,7 +164,7 @@ def send_message(group_name, group_members, group_member_socket):
 
     message = (group_name, group_members)
     data=pickle.dumps(message)
-    print(data)
+    logging.info(data)
 
     # send data to sockets 
     group_member_socket.sendall(data)
@@ -163,11 +174,15 @@ def send_message(group_name, group_members, group_member_socket):
 
 if __name__ == '__main__':
     # create socket
+    logging.basicConfig(filename='info_server.log',level=logging.INFO)
+    logging.basicConfig(filemode='w')
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # set IP address and port to the socket
     server_ip = '127.0.0.1'
     server_port = 11111
     server_file = 'groups_server.txt'
+
+    print("SERVER STARTED")
 
     if os.stat(server_file).st_size == 0:
         groups = {}
@@ -183,7 +198,7 @@ if __name__ == '__main__':
     while True:
         coming_socket, coming_address = s.accept()
         print("Connection from: ", coming_address)
-
+        logging.info(f"Connection from: {coming_address}")
         # handle coming client connections
         coming_connection = threading.Thread(target=receive_data, args=([coming_socket, coming_address]))
         coming_connection.start()

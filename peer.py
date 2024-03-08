@@ -5,6 +5,7 @@ from datetime import datetime
 import pickle
 import json
 import os
+import logging
 
 
 # function to receive data
@@ -12,7 +13,7 @@ def receive_data(s, address):
     
     # message from server
     if address[1] == 11112:
-        print("data coming from the server")
+        logging.info("data coming from the server")
         # load data
         received_msg = pickle.loads(s.recv(1024))
         # send ack
@@ -27,14 +28,8 @@ def receive_data(s, address):
         s.sendall("ack".encode())
         time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         socket_name = s.getsockname()[0]
-        
-        # if message is quit, close the connection
-        if (received_msg.lower() == "quit"):
-            print(f"{time} {socket_name} left from the chat.")
-           
-            
-        else:
-            print(f"{time} {socket_name} : {received_msg}")
+
+        print(f"{time} {socket_name} : {received_msg}")
             
     
 
@@ -57,7 +52,8 @@ def handle_connections(s):
     while True:
         # coming connection
         coming_socket, coming_address = s.accept()
-        print(f"Connection from: {coming_address}")
+        logging.info(f"Connection from: {coming_address}")
+        #print(f"Connection from: {coming_address}")
     
         # Start a thread to handle the incoming connection
         receive_thread = threading.Thread(target=receive_data, args=([coming_socket, coming_address]))
@@ -76,7 +72,7 @@ def handle_groups (group_name, member_info):
     
     # check if group already exists
     if group_name in groups.keys():
-        print("found group from file")
+        logging.info("found group from file")
         groups[group_name] = member_info
      
     # if the group not exists, create group and add members to group
@@ -87,7 +83,9 @@ def handle_groups (group_name, member_info):
     group_file = open(file_name, "w")
     data = json.dump(groups, group_file)
     group_file.close()
-    print("group handling done")
+    
+    logging.info("group handling done")
+
     
 
 
@@ -105,8 +103,14 @@ def handle_server_connection():
     
     except ConnectionRefusedError:
         print("Server currently not available")
+        logging.info("server not available")
         return 
-
+    except OSError:
+        print("Server currently not available")
+        logging.info("server not available")
+        server_socket.close()
+        return
+    
     # enter join / leave message
     message = input("Enter message: ")
     # encode message
@@ -119,15 +123,20 @@ def handle_server_connection():
     server_socket.sendall("ack".encode())
     # print group info
     time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    print(f"{time} : {from_server}") 
+    #print(f"{time} : {from_server}") 
 
     # group name
     if "/join" in message:
         message = message.replace(" ", "")
         group_to_join = message.replace("/join","")
 
-        # update group information
-        handle_groups(group_to_join, from_server)
+        if from_server == "already in group":
+            print(f"You are already in group {group_to_join}")
+        
+        else:    
+            # update group information
+            handle_groups(group_to_join, from_server)
+            print(f"You have joined group {group_to_join}")
 
     elif "/leave" in message:
         if "/leavingdone" == from_server:
@@ -135,9 +144,11 @@ def handle_server_connection():
             group_to_leave = message.replace("/leave","")
             
             if leave_from_group(group_to_leave) == False:
-                print("leaving not succeded")
+                logging.info("Leaving not successful")
+                print("Leaving not succeded")
             else:    
                 print(f"You left from group {group_to_leave}")
+                logging.info("Leaving done")
         
         else:
             print(from_server)
@@ -158,7 +169,7 @@ def leave_from_group (group_name):
        groups.pop(group_name)
      
     else:
-        print("pop false")
+        logging.info("pop false")
         return False
 
     
@@ -180,7 +191,7 @@ def sockets_for_group_members(mem_of_group, msg):
         try:
             peer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             peer_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            peer_socket.bind((own_ip, own_port+1))
+            peer_socket.bind((own_ip, own_port-2))
             peer_socket.connect((peer_address,peer_port))
             send_message(peer_socket, msg)
             
@@ -189,7 +200,7 @@ def sockets_for_group_members(mem_of_group, msg):
             continue
 
         
-    print("group info sent")
+    logging.info("group info sent")
     
     
 
@@ -201,11 +212,17 @@ if __name__ == '__main__':
     print("#           WELCOME!                #")
     print("#####################################")
 
-    own_ip = "127.0.0.1" #input("Enter your own IP: ")
-    own_port = int(sys.argv[1]) #int(input("Enter your port: "))
+    
+
+    own_ip = input("Enter your own IP: ")
+    own_port = int(input("Enter your port: "))
     
     # create filename to save group information
     file_name = own_ip + str(own_port) + ".txt"
+
+    log_file = "info" + own_ip + str(own_port) + ".log"
+    logging.basicConfig(filename=log_file,level=logging.INFO)
+    logging.basicConfig(filemode='w')
 
     if os.path.exists(file_name) == False:
         group_file = open(file_name, "x")
@@ -217,6 +234,7 @@ if __name__ == '__main__':
         group_file = open(file_name, "w")
         json.dump(groups, group_file)
         group_file.close()
+
 
     # create socket
     me = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -233,7 +251,7 @@ if __name__ == '__main__':
 
     while True:
         
-        select = input("Join/leave group, select 1 \n send group message, select 2 \n Send private message, select 3 \n-> ")
+        select = input("Join/leave group, select 1 \n send group message, select 2 \n Send private message, select 3 \n Quit, select 4 \n-> ")
         
         # handle group joining / leaving
         
@@ -263,13 +281,13 @@ if __name__ == '__main__':
         # private message
         if (select == "3"):
 
-            peer_address = "127.0.0.1" #input("Enter IP address of the friend: ")
+            peer_address = input("Enter IP address of the friend: ")
             peer_port = int(input("Enter port of the friend: "))
             message = input("Enter message: ")
 
             try:
                 peer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                peer_socket.bind((own_ip, own_port+1))
+                peer_socket.bind((own_ip, own_port-1))
                 peer_socket.connect((peer_address, peer_port))
                 send_message(peer_socket,message)
                 
@@ -277,4 +295,6 @@ if __name__ == '__main__':
             except ConnectionRefusedError:
                 print(f" Port {peer_port} not available.")
                 continue
-            
+        
+        if (select == "4"):
+            os._exit(0)

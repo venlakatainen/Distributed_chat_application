@@ -96,7 +96,7 @@ Instructions on setting up your project locally
 
 First, you should check that needed Python libraries are installed. 
 
-The needed libraries are: socket, threading, sys, datetime, pickle, json, os
+The needed libraries are: socket, threading, sys, datetime, pickle, json, os and logging
 
 To run application, use cmd to run client.py script. When starting the application the script asks you to input your IP address and port that can be used to connect sockets. Please note, that the script uses also port input +1 to run sockets. Also, if you want to use group message functionality and you have not joined group before, the server script is needed as well. In commercial application, the script should be run by the service provider but in our more like proof-of-concept case, some user should run the server script.
 

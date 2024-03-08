@@ -1,0 +1,68 @@
+INFO:root:Connection from: ('127.0.0.1', 7002)
+INFO:root:2024-03-08 13:27:29 ('127.0.0.1', 7002) : /join loosers
+INFO:root:[('127.0.0.1', '7000')]
+INFO:root:b'\x80\x04\x95%\x00\x00\x00\x00\x00\x00\x00\x8c\x07loosers\x94]\x94\x8c\t127.0.0.1\x94\x8c\x047000\x94\x86\x94a\x86\x94.'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 7002)
+INFO:root:2024-03-08 13:29:58 ('127.0.0.1', 7002) : /join plays
+INFO:root:[('127.0.0.1', '7000')]
+INFO:root:b'\x80\x04\x95#\x00\x00\x00\x00\x00\x00\x00\x8c\x05plays\x94]\x94\x8c\t127.0.0.1\x94\x8c\x047000\x94\x86\x94a\x86\x94.'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 7002)
+INFO:root:2024-03-08 13:31:41 ('127.0.0.1', 7002) : /join players
+INFO:root:[('127.0.0.1', '7000')]
+INFO:root:b'\x80\x04\x95%\x00\x00\x00\x00\x00\x00\x00\x8c\x07players\x94]\x94\x8c\t127.0.0.1\x94\x8c\x047000\x94\x86\x94a\x86\x94.'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 7002)
+INFO:root:2024-03-08 13:32:55 ('127.0.0.1', 7002) : /join ukkelit
+INFO:root:[('127.0.0.1', '7000')]
+INFO:root:b'\x80\x04\x95%\x00\x00\x00\x00\x00\x00\x00\x8c\x07ukkelit\x94]\x94\x8c\t127.0.0.1\x94\x8c\x047000\x94\x86\x94a\x86\x94.'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 7002)
+INFO:root:2024-03-08 13:34:35 ('127.0.0.1', 7002) : /join loosers
+INFO:root:[['127.0.0.1', '7000'], ('127.0.0.1', '7000')]
+INFO:root:b'\x80\x04\x95=\x00\x00\x00\x00\x00\x00\x00\x8c\x07loosers\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x047000\x94e\x8c\t127.0.0.1\x94\x8c\x047000\x94\x86\x94e\x86\x94.'
+INFO:root:Connection from: ('127.0.0.1', 7002)
+INFO:root:2024-03-08 13:36:05 ('127.0.0.1', 7002) : /join loosers
+INFO:root:[['127.0.0.1', '7000'], ['127.0.0.1', '7000'], ('127.0.0.1', '7000')]
+INFO:root:b'\x80\x04\x95T\x00\x00\x00\x00\x00\x00\x00\x8c\x07loosers\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x047000\x94e]\x94(\x8c\t127.0.0.1\x94\x8c\x047000\x94e\x8c\t127.0.0.1\x94\x8c\x047000\x94\x86\x94e\x86\x94.'
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:2024-03-08 13:45:15 ('127.0.0.1', 5002) : /join aasit
+INFO:root:[('127.0.0.1', '5000')]
+INFO:root:b'\x80\x04\x95#\x00\x00\x00\x00\x00\x00\x00\x8c\x05aasit\x94]\x94\x8c\t127.0.0.1\x94\x8c\x045000\x94\x86\x94a\x86\x94.'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 6002)
+INFO:root:2024-03-08 13:45:54 ('127.0.0.1', 6002) : /join aasit
+INFO:root:[['127.0.0.1', '5000'], ('127.0.0.1', '6000')]
+INFO:root:b'\x80\x04\x95;\x00\x00\x00\x00\x00\x00\x00\x8c\x05aasit\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x045000\x94e\x8c\t127.0.0.1\x94\x8c\x046000\x94\x86\x94e\x86\x94.'
+INFO:root:b'\x80\x04\x95;\x00\x00\x00\x00\x00\x00\x00\x8c\x05aasit\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x045000\x94e\x8c\t127.0.0.1\x94\x8c\x046000\x94\x86\x94e\x86\x94.'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:2024-03-08 13:46:09 ('127.0.0.1', 5002) : /join aasit
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:2024-03-08 13:48:41 ('127.0.0.1', 5002) : /join aasit
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:2024-03-08 13:52:03 ('127.0.0.1', 5002) : /leave aasit
+INFO:root:Peer removed from the group
+INFO:root:['127.0.0.1', '6000'] not available.
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 6002)
+INFO:root:2024-03-08 13:53:06 ('127.0.0.1', 6002) : /leave aasit
+INFO:root:Peer removed from the group
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:2024-03-08 13:54:04 ('127.0.0.1', 5002) : /join apinat
+INFO:root:[('127.0.0.1', '5000')]
+INFO:root:b'\x80\x04\x95$\x00\x00\x00\x00\x00\x00\x00\x8c\x06apinat\x94]\x94\x8c\t127.0.0.1\x94\x8c\x045000\x94\x86\x94a\x86\x94.'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 6002)
+INFO:root:2024-03-08 13:54:16 ('127.0.0.1', 6002) : /join apinat
+INFO:root:[['127.0.0.1', '5000'], ('127.0.0.1', '6000')]
+INFO:root:b'\x80\x04\x95<\x00\x00\x00\x00\x00\x00\x00\x8c\x06apinat\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x045000\x94e\x8c\t127.0.0.1\x94\x8c\x046000\x94\x86\x94e\x86\x94.'
+INFO:root:b'\x80\x04\x95<\x00\x00\x00\x00\x00\x00\x00\x8c\x06apinat\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x045000\x94e\x8c\t127.0.0.1\x94\x8c\x046000\x94\x86\x94e\x86\x94.'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:2024-03-08 14:01:40 ('127.0.0.1', 5002) : /join bosses
+INFO:root:[('127.0.0.1', '5000')]
+INFO:root:b'\x80\x04\x95$\x00\x00\x00\x00\x00\x00\x00\x8c\x06bosses\x94]\x94\x8c\t127.0.0.1\x94\x8c\x045000\x94\x86\x94a\x86\x94.'
+INFO:root:group info sent
