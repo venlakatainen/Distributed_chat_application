@@ -129,9 +129,15 @@ Collect numerical data of test cases:
 **Test case: Wrong input given for IP address and/or port**
 - Result: Value error, socket.gaierror
 - Fix: Add Try/Except structure and loop to input address and port until those can be used to bind socket
-- After: Application handles wrong input correctly
+- After: Application handles wrong input correctly -> passed after fix
 
 ![Testcase_1](/images/testing_ip_port.PNG)
+
+
+**Test case: Wrong input in functionality selection**
+- Result: Not possible to select for example letter or wrong number -> passed in first try
+
+![Testcase_2](/images/TC_2.PNG)
 
 ## Acknowledgments:
 list resources you find helpful
