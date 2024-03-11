@@ -103,11 +103,11 @@ def handle_server_connection():
     
     except ConnectionRefusedError:
         print("Server currently not available")
-        logging.info("server not available")
+        logging.info("server not available because of ConnectionRefusedError")
         return 
     except OSError:
         print("Server currently not available")
-        logging.info("server not available")
+        logging.info("server not available because of OSError")
         server_socket.close()
         return
     
