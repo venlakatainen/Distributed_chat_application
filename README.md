@@ -1,6 +1,6 @@
 # Distributed_chat_application
 
-Course project of Distributed Systems course. 
+Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
 
 # Course project template:
@@ -106,6 +106,9 @@ When you belong to some group, you can use the name of the group to send message
 
 There is also a possibility to send private messages to other users. For that, you need the IP address and port of the other user. 
 
+## Testing
+
+Testing of the application was started with testing functionalities of the program. First, we tested how to program handles different inputs for IP address and port. We found a bug of handling those and added try/except structure and loop to check if the inputs are correct.
 
 ## Results of the tests: ------------>>>> TO BE DONE
 Detailed description of the system evaluation
@@ -122,6 +125,12 @@ Design two evaluation scenarios that you compare with each other, for example:
 Collect numerical data of test cases:
 - Collecting logs of container operations
 - Conduct simple analysis for documentation purposes (e.g. plots or graphs)
+
+**Test case: Wrong input given for IP address and/or port**
+- Result: Value error, socket.gaierror
+- Fix: Add Try/Except structure and loop to input address and port until those can be used to bind socket
+- After
+![Testcase_1](../.images/testing_ip_port.PNG)
 
 ## Acknowledgments:
 list resources you find helpful

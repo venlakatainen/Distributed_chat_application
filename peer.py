@@ -213,13 +213,34 @@ if __name__ == '__main__':
     print("#####################################")
 
     
+    while True:
+        
+        try:
+            own_ip = input("Enter your own IP: ")
+            own_port = int(input("Enter your port: "))
+        except ValueError:
+            print("Port should be number")
 
-    own_ip = input("Enter your own IP: ")
-    own_port = int(input("Enter your port: "))
+        # create socket
+        try:
+            me = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # set IP address and port to the socket
+            me.bind((own_ip, own_port))
+            # listen connections from other peers
+            me.listen(5)
+
+            print("Peer listening on {}:{}\n\n".format(own_ip, own_port))
+            break
+        
+        except:
+            print("Wrong IP or port was given")
+        
+        
     
+    # create needed logs
     # create filename to save group information
     file_name = own_ip + str(own_port) + ".txt"
-
+    
     log_file = "info" + own_ip + str(own_port) + ".log"
     logging.basicConfig(filename=log_file,level=logging.INFO)
     logging.basicConfig(filemode='w')
@@ -234,16 +255,6 @@ if __name__ == '__main__':
         group_file = open(file_name, "w")
         json.dump(groups, group_file)
         group_file.close()
-
-
-    # create socket
-    me = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # set IP address and port to the socket
-    me.bind((own_ip, own_port))
-    # listen connections from other peers
-    me.listen(5)
-
-    print("Peer listening on {}:{}\n\n".format(own_ip, own_port))
 
     # start thread to handle incoming connections
     connection_handle_thread = threading.Thread(target=handle_connections, args=([me]))
