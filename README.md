@@ -2,10 +2,7 @@
 
 Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
-
-# Course project template:
-
-# Industry track
+## Industry track
 
 ## Project Title: Distributed peer-to-peer chat application
 
@@ -25,11 +22,13 @@ Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
 7. [Unit Tests](#unit_tests)
 
+8. [Acknowledgements](#acknowledgements)
+
 <a name="about"></a>
 
 ## 1. About the project
 
-## Implemented components:
+### Implemented components:
 
 Detailed description of the system architecture (Application-specific system components):
 - System must have at least three nodes (e.g, containers)
@@ -115,9 +114,7 @@ Because the timeline and scale of the project is small, we decided not to use co
 
 ### 3. Getting Started:
 
-Instructions on setting up your project locally
-
-### HOW TO USE: Details
+Instructions on setting up your project locally.
 
 First, you should check that needed Python libraries are installed. 
 
@@ -137,7 +134,7 @@ There is also a possibility to send private messages to other users. For that, y
 
 Testing of the application was started with testing functionalities of the program. First, we tested how to program handles different inputs for IP address and port. We found a bug of handling those and added try/except structure and loop to check if the inputs are correct. Also, we tested different inputs for selection, peer connection, group joining and leaving. Many functionalities were working correctly right away, but some issues needed to be fixed and tested again. 
 
-## Results of the tests: ------------>>>> TO BE DONE
+### Results of the tests: ------------>>>> TO BE DONE
 Detailed description of the system evaluation
 Evaluate your implementation using selected criteria, for example:
 - Number of messages / lost messages, latencies, ...
@@ -272,8 +269,9 @@ Server handles updating peers correctly as well.
 
 ![Testcase_12](/images/TC12_server.PNG)
 
+<a name="acknowledgements"></a>
 
-## Acknowledgments:
+## 8. Acknowledgments:
 
 Mostly used Python modules' documentation 
 
