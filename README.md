@@ -13,9 +13,17 @@ Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
 1. [About the Project](#about)
 
-2. [Building Details](#building)
+2. [Implementation Details](#implementation)
 
-3. [Testing](#testing)
+3. [Building Details](#building)
+
+4. [Getting Started](#getting_started)
+
+5. [Testing](#testing)
+
+6. [Latency tests](#latency)
+
+7. [Unit Tests](#unit_tests)
 
 <a name="about"></a>
 
@@ -40,10 +48,12 @@ Each node must be an independent entity and (partially) autonomous
 
 Detailed descriptions of relevant principles covered in the course (architecture, processes, communication, naming, synchronization, consistency and replication, fault tolerance); irrelevant principles can be left out.
 
-### Implementation Details
+
+<a name="implementation"></a>
+
+### 2. Implementation Details
 
 Our course project is distributed peer-to-peer chat application. Using our application you can send messages using distribution. The peers can communicate directly to each other and the server is used only for the group handling.
-
 
 
 **Architecture**:
@@ -97,11 +107,14 @@ Detailed description of the system functionality and how to run the implementati
 
 <a name="building"></a>
 
-### 2. Building Details
+## 2. Building Details
 
 Because the timeline and scale of the project is small, we decided not to use container technology because we are not familiar with any. The programming language of the project is Python and TCP protocol is used for communication between Python sockets used in the project.
 
-## Getting Started:
+<a name="getting_started"></a>
+
+### 3. Getting Started:
+
 Instructions on setting up your project locally
 
 ### HOW TO USE: Details
@@ -120,7 +133,7 @@ There is also a possibility to send private messages to other users. For that, y
 
 <a name="testing"></a>
 
-## 3. Testing
+## 4. Testing
 
 Testing of the application was started with testing functionalities of the program. First, we tested how to program handles different inputs for IP address and port. We found a bug of handling those and added try/except structure and loop to check if the inputs are correct. Also, we tested different inputs for selection, peer connection, group joining and leaving. Many functionalities were working correctly right away, but some issues needed to be fixed and tested again. 
 
@@ -140,7 +153,9 @@ Collect numerical data of test cases:
 - Collecting logs of container operations
 - Conduct simple analysis for documentation purposes (e.g. plots or graphs)
 
-## Latency tests
+<a name="latency"></a>
+
+### 5. Latency tests
 
 We tested latency using Python timeit module. Both group joining and leaving latencies were good.
 
@@ -172,8 +187,9 @@ Latency stayed also stabile eventhough two peers were joining to the group at th
 
 ![Testcase_17](/images/TC17.PNG)
 
+<a name="unit_tests"></a>
 
-## Unit Test cases
+### 6. Unit Test cases
 
 ### Test case statistics
 
