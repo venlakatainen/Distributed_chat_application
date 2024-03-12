@@ -126,8 +126,40 @@ Collect numerical data of test cases:
 - Collecting logs of container operations
 - Conduct simple analysis for documentation purposes (e.g. plots or graphs)
 
+## Latency tests
 
-## Test cases
+We tested latency using Python timeit module. Both group joining and leaving latencies were good.
+
+**Group joining latency (message sending and receiving with server)**
+
+- Result: 0.0030354000627994537
+
+![Testcase_13](/images/TC13.PNG)
+
+Latency stayed also stabile eventhough two peers were joining to the group at the same time
+
+![Testcase_14](/images/TC14.PNG)
+
+**Group leaving latency (message sending and receiving with server)**
+
+- Result: 0.002914200071245432
+
+![Testcase_15](/images/TC15.PNG)
+
+**Latency of group joining handling database in peer side**
+
+- Result: 0.005914099980145693
+
+![Testcase_16](/images/TC16.PNG)
+
+**Latency of group leaving with handling database in peer side**
+
+- Result: 0.004863199777901173
+
+![Testcase_17](/images/TC17.PNG)
+
+
+## Unit Test cases
 
 ### Test case statistics
 
@@ -212,5 +244,6 @@ Server handles updating peers correctly as well.
 
 
 ## Acknowledgments:
-list resources you find helpful
+
+Mostly used Python modules' documentation 
 

@@ -6,6 +6,7 @@ import pickle
 import json
 import os
 import logging
+import timeit
 
 
 # function to receive data
@@ -116,13 +117,16 @@ def handle_server_connection():
     # encode message
     msg_to_send = message.encode('utf-8')
     # send message to the server
+    start = timeit.default_timer()
     server_socket.sendall(msg_to_send)
     # receive group info from the server
     
     from_server = pickle.loads(server_socket.recv(1024))
+    #end = timeit.default_timer()
+    #print(f"time used {end-start}")
     server_socket.sendall("ack".encode())
     # print group info
-    time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    #times = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     #print(f"{time} : {from_server}") 
 
     # group name
@@ -155,6 +159,9 @@ def handle_server_connection():
 
     else:
         print("Message did not included /join or /leave command")
+    
+    end = timeit.default_timer()
+    print(f"time used {end-start}")
 
 
 
