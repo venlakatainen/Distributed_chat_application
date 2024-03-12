@@ -22,7 +22,9 @@ Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
 7. [Unit Tests](#unit_tests)
 
-8. [Acknowledgements](#acknowledgements)
+8. [Strss Test](#stress)
+
+9. [Acknowledgements](#acknowledgements)
 
 <a name="about"></a>
 
@@ -57,7 +59,7 @@ Our course project is distributed peer-to-peer chat application. Using our appli
 
 **Architecture**:
 
-Our application consists of one server and peers which are communication partners. The server can listen maximum of five peers so the total count of the nodes is max six. However, the application is scalable because the listening count of the server can be increased. The server is handling group joining and leaving functionality. Because the architecture is distributed peer-to-peer, peers do not need server to send or receive messages to other peers.
+Our application consists of one server and peers which are communication partners, group members. The application was tested with server and maximum 10 peers taking connection to the server. The server is handling group joining and leaving functionality. Because the architecture is distributed peer-to-peer, peers do not need server to send or receive messages to other peers.
 
 
 
@@ -118,9 +120,9 @@ Instructions on setting up your project locally.
 
 First, you should check that needed Python libraries are installed. 
 
-The needed libraries are: socket, threading, sys, datetime, pickle, json, os and logging
+The needed libraries are: socket, threading, sys, datetime, pickle, json, os, timeit and logging
 
-To run application, use cmd to run client.py script. When starting the application the script asks you to input your IP address and port that can be used to connect sockets. Please note, that the script uses also port input +1 to run sockets. Also, if you want to use group message functionality and you have not joined group before, the server script is needed as well. In commercial application, the script should be run by the service provider but in our more like proof-of-concept case, some user should run the server script.
+To run application, use cmd to run client.py script. When starting the application the script asks you to input your IP address and port that can be used to connect sockets. Please note, that the script uses also port input +1 and -1 to run sockets. Also, if you want to use group message functionality and you have not joined group before, the server script is needed as well. In commercial application, the script should be run by the service provider but in our more like proof-of-concept case, some user should run the server script.
 
 When you have started the application and input your IP address and port, you can choose if you want to join/leave group, send group message or send private message. If you select group joining/leaving, you need to input the group that you want to join/leave. The server sends the other group members back to you if the joining was successful and there was other members in the group already. Also, the other group members are informed of your joining or leaving.
 
@@ -269,9 +271,18 @@ Server handles updating peers correctly as well.
 
 ![Testcase_12](/images/TC12_server.PNG)
 
+
+<a name="stress"></a>
+
+### 8. Stress test
+
+We tested how much peers the group handling server can handle. The server worked correctly even with ten connected peers. The test was done manually so with more peers, the test was not tried. 
+
+![Testcase_17](/images/TC17.PNG)
+
 <a name="acknowledgements"></a>
 
-## 8. Acknowledgments:
+## 9. Acknowledgments:
 
 Mostly used Python modules' documentation 
 
