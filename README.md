@@ -180,10 +180,26 @@ Collect numerical data of test cases:
 
 - Result: joining successful -> Passed in first try
 
-![Testcase_8](/images/TC9.PNG)
+![Testcase_9](/images/TC9.PNG)
+
+**Test case: Send group message**
+
+- Result: Group message sent succesfully
+
+![Testcase_10](/images/TC10.PNG)
 
 
+**Test case: Leave from group**
 
+- Result: Leaving from group was handled successfully
+
+![Testcase_12](/images/TC12.PNG)
+
+Server handles updating peers correctly as well.
+
+![Testcase_12](/images/TC12_database.PNG)
+
+![Testcase_12](/images/TC12_server.PNG)
 
 
 ## Acknowledgments:
