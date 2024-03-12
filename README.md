@@ -158,6 +158,13 @@ Collect numerical data of test cases:
 
 We tested latency using Python timeit module. Both group joining and leaving latencies were good.
 
+Function | Group joining | Group leaving |
+|---|---|---|
+Information change with server | 0.0030354000627994537 | 0.002914200071245432 |
+Information change with server + database handling in peer side | 0.005914099980145693 | 0.004863199777901173 |
+
+As can be seen from the results, in both cases the group leaving was a little bit faster than group joining. However, neither of them can be said to slow down the program.
+
 **Group joining latency (message sending and receiving with server)**
 
 - Result: 0.0030354000627994537
@@ -174,13 +181,13 @@ Latency stayed also stabile eventhough two peers were joining to the group at th
 
 ![Testcase_15](/images/TC15.PNG)
 
-**Latency of group joining handling database in peer side**
+**Latency of group joining and handling database in peer side**
 
 - Result: 0.005914099980145693
 
 ![Testcase_16](/images/TC16.PNG)
 
-**Latency of group leaving with handling database in peer side**
+**Latency of group leaving and handling database in peer side**
 
 - Result: 0.004863199777901173
 
