@@ -9,13 +9,13 @@ Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
 ## Project Title: Distributed peer-to-peer chat application
 
-## Table of contents
+**Table of content:**
 
-1. [Project] (#about)
+1. [About the Project](#about)
 
-2. [Building] (#building)
+2. [Building Details](#building)
 
-3. [Testing] (#testing)
+3. [Testing](#testing)
 
 <a name="about"></a>
 
