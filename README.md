@@ -9,7 +9,17 @@ Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
 ## Project Title: Distributed peer-to-peer chat application
 
-## About the project
+## Table of contents
+
+1. [Project] (#about)
+
+2. [Building] (#building)
+
+3. [Testing] (#testing)
+
+<a name="about"></a>
+
+## 1. About the project
 
 ## Implemented components:
 
@@ -85,7 +95,9 @@ Detailed description of the system functionality and how to run the implementati
 - Any programming language can be used, such as: Python, Java, JavaScript, ..
 - Any communication protocol / Internet protocol suite can be used: HTTP(S), MQTT, AMQP, CoAP, ..
 
-### Building Details
+<a name="building"></a>
+
+### 2. Building Details
 
 Because the timeline and scale of the project is small, we decided not to use container technology because we are not familiar with any. The programming language of the project is Python and TCP protocol is used for communication between Python sockets used in the project.
 
@@ -106,7 +118,9 @@ When you belong to some group, you can use the name of the group to send message
 
 There is also a possibility to send private messages to other users. For that, you need the IP address and port of the other user. 
 
-## Testing
+<a name="testing"></a>
+
+## 3. Testing
 
 Testing of the application was started with testing functionalities of the program. First, we tested how to program handles different inputs for IP address and port. We found a bug of handling those and added try/except structure and loop to check if the inputs are correct. Also, we tested different inputs for selection, peer connection, group joining and leaving. Many functionalities were working correctly right away, but some issues needed to be fixed and tested again. 
 

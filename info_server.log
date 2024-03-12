@@ -138,3 +138,12 @@ INFO:root:2024-03-12 13:14:02 ('127.0.0.1', 5002) : /join uuu
 INFO:root:[('127.0.0.1', '5000')]
 INFO:root:b'\x80\x04\x95!\x00\x00\x00\x00\x00\x00\x00\x8c\x03uuu\x94]\x94\x8c\t127.0.0.1\x94\x8c\x045000\x94\x86\x94a\x86\x94.'
 INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:2024-03-12 13:14:54 ('127.0.0.1', 5002) : /join ppp
+INFO:root:[('127.0.0.1', '5000')]
+INFO:root:b'\x80\x04\x95!\x00\x00\x00\x00\x00\x00\x00\x8c\x03ppp\x94]\x94\x8c\t127.0.0.1\x94\x8c\x045000\x94\x86\x94a\x86\x94.'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:2024-03-12 13:18:14 ('127.0.0.1', 5002) : /leave ppp
+INFO:root:Peer removed from the group
+INFO:root:group info sent
