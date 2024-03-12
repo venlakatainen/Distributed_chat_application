@@ -153,6 +153,8 @@ def handle_server_connection():
         else:
             print(from_server)
 
+    else:
+        print("Message did not included /join or /leave command")
 
 
 

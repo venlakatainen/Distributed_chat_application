@@ -63,6 +63,10 @@ def receive_data(conn, address):
             data=pickle.dumps("/leavingdone")
             conn.sendall(data)
             update_group_members(group_to_leave, group_info)
+    
+    else:
+        data=pickle.dumps("false")
+        conn.sendall(data)
 
 
 # function to handle group leaving

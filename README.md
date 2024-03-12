@@ -139,6 +139,51 @@ Collect numerical data of test cases:
 
 ![Testcase_2](/images/TC_2.PNG)
 
+**Test case: Wrong server message**
+- Result: Program stopped working if wrong server command given as a message
+- Fix: Added error handling if message does not include /join or /leave
+- After: Wrong input is handled correctly -> passed
+
+![Testcase_3](/images/TC3.PNG)
+
+**Test case: Message to group that does not exists**
+
+- Result: Wrong group name is handled correctly -> Passed in first try
+
+![Testcase_4](/images/TC4.PNG)
+
+**Test case: Private message peer not available**
+
+- Result: Cannot connect peer address/port is handled correctly -> Passed in first try
+
+![Testcase_5](/images/TC5.PNG)
+
+**Test case: Leave from group that does not exists**
+
+- Result: Leaving handled correctly -> Passed in first try
+
+![Testcase_6](/images/TC6.PNG)
+
+**Test case: Server not available**
+
+- Result: Handled correctly -> Passed in first try
+
+![Testcase_7](/images/TC7.PNG)
+
+**Test case: Send private message**
+
+- Result: message sent successfully -> Passed in first try
+
+![Testcase_8](/images/TC8.PNG)
+
+- Result: joining successful -> Passed in first try
+
+![Testcase_8](/images/TC9.PNG)
+
+**Test case: Join group**
+
+
+
 ## Acknowledgments:
 list resources you find helpful
 

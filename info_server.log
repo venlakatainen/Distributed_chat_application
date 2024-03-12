@@ -66,3 +66,30 @@ INFO:root:2024-03-08 14:01:40 ('127.0.0.1', 5002) : /join bosses
 INFO:root:[('127.0.0.1', '5000')]
 INFO:root:b'\x80\x04\x95$\x00\x00\x00\x00\x00\x00\x00\x8c\x06bosses\x94]\x94\x8c\t127.0.0.1\x94\x8c\x045000\x94\x86\x94a\x86\x94.'
 INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 8002)
+INFO:root:2024-03-12 09:18:13 ('127.0.0.1', 8002) : asdf
+INFO:root:Connection from: ('127.0.0.1', 9002)
+INFO:root:2024-03-12 09:21:26 ('127.0.0.1', 9002) : asdf
+INFO:root:Connection from: ('127.0.0.1', 9002)
+INFO:root:2024-03-12 09:23:44 ('127.0.0.1', 9002) : asdf
+INFO:root:Connection from: ('127.0.0.1', 9002)
+INFO:root:2024-03-12 09:26:47 ('127.0.0.1', 9002) : /join group
+INFO:root:[('127.0.0.1', '9000')]
+INFO:root:b'\x80\x04\x95#\x00\x00\x00\x00\x00\x00\x00\x8c\x05group\x94]\x94\x8c\t127.0.0.1\x94\x8c\x049000\x94\x86\x94a\x86\x94.'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 9002)
+INFO:root:2024-03-12 09:30:41 ('127.0.0.1', 9002) : /leave ooo
+INFO:root:Peer leaving not done
+INFO:root:Connection from: ('127.0.0.1', 9002)
+INFO:root:2024-03-12 09:35:39 Peer closed the connection
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:2024-03-12 09:36:54 ('127.0.0.1', 5002) : /join testing_group
+INFO:root:[('127.0.0.1', '5000')]
+INFO:root:b'\x80\x04\x95+\x00\x00\x00\x00\x00\x00\x00\x8c\rtesting_group\x94]\x94\x8c\t127.0.0.1\x94\x8c\x045000\x94\x86\x94a\x86\x94.'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 6002)
+INFO:root:2024-03-12 09:37:08 ('127.0.0.1', 6002) : /join testing_group
+INFO:root:[['127.0.0.1', '5000'], ('127.0.0.1', '6000')]
+INFO:root:b'\x80\x04\x95C\x00\x00\x00\x00\x00\x00\x00\x8c\rtesting_group\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x045000\x94e\x8c\t127.0.0.1\x94\x8c\x046000\x94\x86\x94e\x86\x94.'
+INFO:root:b'\x80\x04\x95C\x00\x00\x00\x00\x00\x00\x00\x8c\rtesting_group\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x045000\x94e\x8c\t127.0.0.1\x94\x8c\x046000\x94\x86\x94e\x86\x94.'
+INFO:root:group info sent
