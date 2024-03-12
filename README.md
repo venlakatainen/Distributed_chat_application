@@ -176,11 +176,13 @@ Collect numerical data of test cases:
 
 ![Testcase_8](/images/TC8.PNG)
 
+**Test case: Join group**
+
 - Result: joining successful -> Passed in first try
 
 ![Testcase_8](/images/TC9.PNG)
 
-**Test case: Join group**
+
 
 
 
