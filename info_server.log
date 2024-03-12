@@ -172,3 +172,25 @@ INFO:root:b'\x80\x04\x95P\x00\x00\x00\x00\x00\x00\x00\x8c\x03lkk\x94]\x94(]\x94(
 INFO:root:b'\x80\x04\x95P\x00\x00\x00\x00\x00\x00\x00\x8c\x03lkk\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x046000\x94e]\x94(\x8c\t127.0.0.1\x94\x8c\x044500\x94e\x8c\t127.0.0.1\x94\x8c\x043000\x94\x86\x94e\x86\x94.'
 INFO:root:b'\x80\x04\x95P\x00\x00\x00\x00\x00\x00\x00\x8c\x03lkk\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x046000\x94e]\x94(\x8c\t127.0.0.1\x94\x8c\x044500\x94e\x8c\t127.0.0.1\x94\x8c\x043000\x94\x86\x94e\x86\x94.'
 INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 3002)
+INFO:root:Connection from: ('127.0.0.1', 3702)
+INFO:root:Connection from: ('127.0.0.1', 3302)
+INFO:root:Connection from: ('127.0.0.1', 3502)
+INFO:root:Connection from: ('127.0.0.1', 4002)
+INFO:root:Connection from: ('127.0.0.1', 4302)
+INFO:root:Connection from: ('127.0.0.1', 4502)
+INFO:root:Connection from: ('127.0.0.1', 4702)
+INFO:root:Connection from: ('127.0.0.1', 4802)
+INFO:root:Connection from: ('127.0.0.1', 4902)
+INFO:root:2024-03-12 14:20:57 ('127.0.0.1', 4902) : /join asdf
+INFO:root:[['127.0.0.1', '5000'], ('127.0.0.1', '4900')]
+INFO:root:['127.0.0.1', '5000'] not available.
+INFO:root:b'\x80\x04\x95:\x00\x00\x00\x00\x00\x00\x00\x8c\x04asdf\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x045000\x94e\x8c\t127.0.0.1\x94\x8c\x044900\x94\x86\x94e\x86\x94.'
+INFO:root:group info sent
+INFO:root:2024-03-12 14:19:20 Peer closed the connection
+INFO:root:2024-03-12 14:18:30 ('127.0.0.1', 3702) : /join asdf
+INFO:root:[['127.0.0.1', '5000'], ['127.0.0.1', '4900'], ('127.0.0.1', '3700')]
+INFO:root:['127.0.0.1', '5000'] not available.
+INFO:root:b'\x80\x04\x95Q\x00\x00\x00\x00\x00\x00\x00\x8c\x04asdf\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x045000\x94e]\x94(\x8c\t127.0.0.1\x94\x8c\x044900\x94e\x8c\t127.0.0.1\x94\x8c\x043700\x94\x86\x94e\x86\x94.'
+INFO:root:b'\x80\x04\x95Q\x00\x00\x00\x00\x00\x00\x00\x8c\x04asdf\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x045000\x94e]\x94(\x8c\t127.0.0.1\x94\x8c\x044900\x94e\x8c\t127.0.0.1\x94\x8c\x043700\x94\x86\x94e\x86\x94.'
+INFO:root:group info sent
