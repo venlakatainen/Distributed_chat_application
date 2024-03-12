@@ -1,0 +1,11 @@
+INFO:root:group handling done
+INFO:root:Connection from: ('127.0.0.1', 11112)
+INFO:root:data coming from the server
+INFO:root:found group from file
+INFO:root:group handling done
+INFO:root:Connection from: ('127.0.0.1', 5998)
+INFO:root:Connection from: ('127.0.0.1', 5999)
+INFO:root:Connection from: ('127.0.0.1', 11112)
+INFO:root:data coming from the server
+INFO:root:found group from file
+INFO:root:group handling done

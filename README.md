@@ -126,6 +126,15 @@ Collect numerical data of test cases:
 - Collecting logs of container operations
 - Conduct simple analysis for documentation purposes (e.g. plots or graphs)
 
+
+## Test cases
+
+### Test case statistics
+
+| Passed in first try | Passed after fix | Total number of cases |
+|----|----|---|
+| 9 | 2 | 11 |
+
 **Test case: Wrong input given for IP address and/or port**
 - Result: Value error, socket.gaierror
 - Fix: Add Try/Except structure and loop to input address and port until those can be used to bind socket
