@@ -108,7 +108,7 @@ There is also a possibility to send private messages to other users. For that, y
 
 ## Testing
 
-Testing of the application was started with testing functionalities of the program. First, we tested how to program handles different inputs for IP address and port. We found a bug of handling those and added try/except structure and loop to check if the inputs are correct.
+Testing of the application was started with testing functionalities of the program. First, we tested how to program handles different inputs for IP address and port. We found a bug of handling those and added try/except structure and loop to check if the inputs are correct. Also, we tested different inputs for selection, peer connection, group joining and leaving. Many functionalities were working correctly right away, but some issues needed to be fixed and tested again. 
 
 ## Results of the tests: ------------>>>> TO BE DONE
 Detailed description of the system evaluation
