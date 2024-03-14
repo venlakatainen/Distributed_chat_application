@@ -260,3 +260,23 @@ INFO:root:[['127.0.0.1', '6000'], ('127.0.0.1', '5000')]
 INFO:root:b'{"group": "testinggroup", "members": [["127.0.0.1", "6000"], ["127.0.0.1", "5000"]]}'
 INFO:root:b'{"group": "testinggroup", "members": [["127.0.0.1", "6000"], ["127.0.0.1", "5000"]]}'
 INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 6002)
+INFO:root:{'cmd': 'leave', 'group': 'testinggroup'}
+INFO:root:b'{"group": "testinggroup", "members": [["127.0.0.1", "5000"]]}'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 6002)
+INFO:root:{'cmd': 'join', 'group': 'testinggroup'}
+INFO:root:[['127.0.0.1', '5000'], ('127.0.0.1', '6000')]
+INFO:root:b'{"group": "testinggroup", "members": [["127.0.0.1", "5000"], ["127.0.0.1", "6000"]]}'
+INFO:root:b'{"group": "testinggroup", "members": [["127.0.0.1", "5000"], ["127.0.0.1", "6000"]]}'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:{'cmd': 'leave', 'group': 'testinggroup'}
+INFO:root:b'{"group": "testinggroup", "members": [["127.0.0.1", "6000"]]}'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:{'cmd': 'join', 'group': 'testinggroup'}
+INFO:root:[['127.0.0.1', '6000'], ('127.0.0.1', '5000')]
+INFO:root:b'{"group": "testinggroup", "members": [["127.0.0.1", "6000"], ["127.0.0.1", "5000"]]}'
+INFO:root:b'{"group": "testinggroup", "members": [["127.0.0.1", "6000"], ["127.0.0.1", "5000"]]}'
+INFO:root:group info sent
