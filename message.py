@@ -12,11 +12,11 @@ class Message:
             "message": self.message,
             "sender": self.sender,
             "time": self.time,
-            "group": self.group if self.group else "null"
+            "group": self.group if self.group else None#else "null"
         }
     
     def __str__(self):
-        return f"[{self.time}] {self.sender}{f' in {self.group}' if self.group != 'null' else ''}: {self.message}"
+        return f"[{self.time}] {self.sender}{f' in {self.group}' if self.group != None else ''}: {self.message}"
     
     @staticmethod
     def from_json(json):
