@@ -10,21 +10,21 @@ Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
 1. [About the Project](#about)
 
-2. [Implementation Details](#implementation)
+1.1 [Implementation Details](#implementation)
 
-3. [Building Details](#building)
+2. [Building Details](#building)
 
-4. [Getting Started](#getting_started)
+2.1 [Getting Started](#getting_started)
 
-5. [Testing](#testing)
+3. [Testing](#testing)
 
-6. [Latency tests](#latency)
+3.1. [Latency tests](#latency)
 
-7. [Unit Tests](#unit_tests)
+3.2 [Unit Tests](#unit_tests)
 
-8. [Strss Test](#stress)
+3.3 [Strss Test](#stress)
 
-9. [Acknowledgements](#acknowledgements)
+4. [Acknowledgements](#acknowledgements)
 
 <a name="about"></a>
 
