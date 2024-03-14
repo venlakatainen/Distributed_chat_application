@@ -8,16 +8,27 @@ class Message:
         self.group = group
 
     def get_json(self):
+        if self.group:
+            return {
+                "message": self.message,
+                "sender": self.sender,
+                "time": self.time,
+                "group": self.group
+            }
         return {
             "message": self.message,
             "sender": self.sender,
-            "time": self.time,
-           "group": self.group if self.group else "null"
+            "time": self.time
         }
     
     def __str__(self):
-        return f"[{self.time}] {self.sender}{f' in {self.group}' if self.group != 'null' else ''}: {self.message}"
+        if self.group:
+            return f"[{self.time}] {self.sender} in {self.group}: {self.message}"
+        return f"[{self.time}] {self.sender}: {self.message}"
     
     @staticmethod
     def from_json(json):
-        return Message(json["message"], json["sender"], time=json["time"] if json["time"] else None, group=json["group"] if json["group"] else None)
+        if "group" not in json:
+            return Message(json["message"], json["sender"], time=json["time"] if json["time"] else datetime.now().strftime('%Y-%m-%d %H:%M'))
+        
+        return Message(json["message"], json["sender"], time=json["time"] if json["time"] else datetime.now().strftime('%Y-%m-%d %H:%M'), group=json["group"])
