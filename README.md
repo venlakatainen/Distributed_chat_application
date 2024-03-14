@@ -178,22 +178,6 @@ The program can be closed with command
 
 Testing of the application was started with testing functionalities of the program. First, we tested how to program handles different inputs for IP address and port. We found a bug of handling those and added try/except structure and loop to check if the inputs are correct. Also, we tested different inputs for selection, peer connection, group joining and leaving. Many functionalities were working correctly right away, but some issues needed to be fixed and tested again. 
 
-### Results of the tests: ------------>>>> TO BE DONE
-Detailed description of the system evaluation
-Evaluate your implementation using selected criteria, for example:
-- Number of messages / lost messages, latencies, ...
-- Request processing with different payloads, ..
-- System throughput, ..
-
-
-Design two evaluation scenarios that you compare with each other, for example:
-- Small number / large number of messages
-- Small payload / big payload
-
-Collect numerical data of test cases:
-- Collecting logs of container operations
-- Conduct simple analysis for documentation purposes (e.g. plots or graphs)
-
 <a name="latency"></a>
 
 ### 5. Latency tests
@@ -324,7 +308,7 @@ Server handles updating peers correctly as well.
 
 - Result: handled correctly -> passed with the first try
 
-![Testcase_18](/images/TC1().PNG)
+![Testcase_18](/images/TC18.PNG)
 
 <a name="stress"></a>
 
