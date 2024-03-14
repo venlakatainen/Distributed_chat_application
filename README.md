@@ -11,7 +11,7 @@ Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 - [1. About the Project](#1-about)
     * [1.1 Implementation Details](#implementation)
 
-- [2. Building Details](#building)
+- [2. Building](#building)
 
     * [2.1 Getting Started](#getting_started)
 
