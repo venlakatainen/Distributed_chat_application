@@ -1,22 +1,23 @@
 from datetime import datetime
 
 class Message:
-    def __init__(self, message: str, sender: str, receiver: str, group=None):
+    def __init__(self, message: str, sender: str, group: str = None, time: str = None):
         self.message = message
         self.sender = sender
-        self.receiver = receiver
-        self.time = datetime.now()
+        self.time = datetime.now().strftime('%Y-%m-%d %H:%M') if not time else time
         self.group = group
 
     def get_json(self):
         return {
             "message": self.message,
             "sender": self.sender,
-            "receiver": self.receiver,
             "time": self.time,
             "group": self.group if self.group else "null"
         }
     
     def __str__(self):
-        return f"[{self.time.strftime('%Y-%m-%d %H:%M')}] {self.sender}: {self.message}"
+        return f"[{self.time}] {'(g)' if self.group else ''}{self.sender}: {self.message}"
     
+    @staticmethod
+    def from_json(json):
+        return Message(json["message"], json["sender"], time=json["time"] if json["time"] else None, group=json["group"] if json["group"] else None)
