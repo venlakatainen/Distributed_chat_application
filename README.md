@@ -120,15 +120,26 @@ Instructions on setting up your project locally.
 
 First, you should check that needed Python libraries are installed. 
 
-The needed libraries are: socket, threading, sys, datetime, pickle, json, os, timeit and logging
+The needed libraries are: socket, threading, sys, datetime, json, os, timeit and logging
 
-To run application, use cmd to run client.py script. When starting the application the script asks you to input your IP address and port that can be used to connect sockets. Please note, that the script uses also port input +1 and -1 to run sockets. Also, if you want to use group message functionality and you have not joined group before, the server script is needed as well. In commercial application, the script should be run by the service provider but in our more like proof-of-concept case, some user should run the server script.
+To run application, use cmd to run client.py script. When starting the application the script asks you to input your port that can be used to connect sockets. Please note, that the script uses also port input +1 and -1 to run sockets. Also, if you want to use group message functionality and you have not joined group before, the server script is needed as well. In commercial application, the script should be run by the service provider but in our more like proof-of-concept case, some user should run the server script.
 
-When you have started the application and input your IP address and port, you can choose if you want to join/leave group, send group message or send private message. If you select group joining/leaving, you need to input the group that you want to join/leave. The server sends the other group members back to you if the joining was successful and there was other members in the group already. Also, the other group members are informed of your joining or leaving.
+When you have started the application and input your port, you can choose if you want to add alias, manage groups, send group message or send private message. If you select group management, you need to input the group that you want to join/leave or you can list groups. The server sends the other group members back to you if the joining was successful and there was other members in the group already. Also, the other group members are informed of your joining or leaving.
 
 When you belong to some group, you can use the name of the group to send messages to the other members. Then you should select the second option in the application. The application asks you to enter group name and message and it will send the message all the members. 
 
-There is also a possibility to send private messages to other users. For that, you need the IP address and port of the other user. 
+There is also a possibility to send private messages to other users. For that, you need the IP address and port of the other user or alias. 
+
+You can get help to using application with command /help.
+
+Commands of the application are:
+
+- /s : Start group management
+- /g [group_name] [message]: Send message to a group
+- /p [ip:port] [message]: Send private message
+- /a [ip:port] [alias]: Add alias
+- /pa [alias] [message]: Send private message using alias
+- /exit: Exit the program
 
 <a name="testing"></a>
 
@@ -211,7 +222,7 @@ Latency stayed also stabile eventhough two peers were joining to the group at th
 ![Testcase_1](/images/testing_ip_port.PNG)
 
 
-**Test case: Wrong input in functionality selection**
+**Test case: Wrong input in functionality selection (functionality improved later)**
 - Result: Not possible to select for example letter or wrong number -> passed in first try
 
 ![Testcase_2](/images/TC_2.PNG)

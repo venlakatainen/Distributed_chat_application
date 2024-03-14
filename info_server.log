@@ -194,3 +194,13 @@ INFO:root:['127.0.0.1', '5000'] not available.
 INFO:root:b'\x80\x04\x95Q\x00\x00\x00\x00\x00\x00\x00\x8c\x04asdf\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x045000\x94e]\x94(\x8c\t127.0.0.1\x94\x8c\x044900\x94e\x8c\t127.0.0.1\x94\x8c\x043700\x94\x86\x94e\x86\x94.'
 INFO:root:b'\x80\x04\x95Q\x00\x00\x00\x00\x00\x00\x00\x8c\x04asdf\x94]\x94(]\x94(\x8c\t127.0.0.1\x94\x8c\x045000\x94e]\x94(\x8c\t127.0.0.1\x94\x8c\x044900\x94e\x8c\t127.0.0.1\x94\x8c\x043700\x94\x86\x94e\x86\x94.'
 INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:{'cmd': 'list'}
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:{'cmd': 'list'}
+INFO:root:Connection from: ('127.0.0.1', 6002)
+INFO:root:{'cmd': 'list'}
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:{'cmd': 'list'}
+INFO:root:Connection from: ('127.0.0.1', 6002)
+INFO:root:{'cmd': 'list'}

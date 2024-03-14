@@ -411,7 +411,7 @@ if __name__ == '__main__':
                 "/s : Start group management",
                 "/g [group_name] [message]: Send message to a group",
                 "/p [ip:port] [message]: Send private message",
-                "/a [alias] [ip:port]: Add alias",
+                "/a [ip:port] [alias]: Add alias",
                 "/pa [alias] [message]: Send private message using alias",
                 "/exit: Exit the program",
             ]
