@@ -8,23 +8,23 @@ Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
 **Table of content:**
 
-1. [About the Project](#about)
+- [1. About the Project](#about)
 
-1.1 [Implementation Details](#implementation)
+ * [1.1 Implementation Details](#implementation)
 
-2. [Building Details](#building)
+- [2. Building Details](#building)
 
-2.1 [Getting Started](#getting_started)
+ * [2.1 Getting Started](#getting_started)
 
-3. [Testing](#testing)
+- [3. Testing](#testing)
 
-3.1. [Latency tests](#latency)
+ * [3.1 Latency tests](#latency)
 
-3.2 [Unit Tests](#unit_tests)
+ * [3.2 Unit Tests](#unit_tests)
 
-3.3 [Strss Test](#stress)
+ * [3.3 Strss Test](#stress)
 
-4. [Acknowledgements](#acknowledgements)
+- [4. Acknowledgements](#acknowledgements)
 
 <a name="about"></a>
 
