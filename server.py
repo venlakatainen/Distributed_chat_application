@@ -72,7 +72,7 @@ def receive_data(conn, address):
     conn.close()
 
 
-# function to handle group leaving
+# handle leaving groups
 def leave_from_group (group_name, socket_ip, socket_port):
     # read group information from file
     with open(server_file) as group_file:
@@ -102,7 +102,7 @@ def leave_from_group (group_name, socket_ip, socket_port):
     return True, members
 
 
-# function to handle joining groups -> add peer to the group  
+# handle joining groups -> add peer to the group  
 def join_group (group_name, socket_ip, socket_port):
     with open(server_file) as group_file:
         data = json.load(group_file)

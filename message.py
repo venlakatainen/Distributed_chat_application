@@ -16,7 +16,7 @@ class Message:
         }
     
     def __str__(self):
-        return f"[{self.time}] {self.sender}{f' in {self.group}' if self.group else ''}: {self.message}"
+        return f"[{self.time}] {self.sender}{f' in {self.group}' if self.group != "null" else ''}: {self.message}"
     
     @staticmethod
     def from_json(json):
