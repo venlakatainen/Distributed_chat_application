@@ -34,7 +34,7 @@ Chachat is the course project of Distributed Systems course by Juho Bruun and Ve
 
 <a name="implementation"></a>
 
-### 2. Implementation Details
+### 1.1 Implementation Details
 
 Our course project is distributed peer-to-peer chat application. Using our application you can send messages using distribution. The peers can communicate directly to each other and the server is used only for the group handling.
 
@@ -83,13 +83,13 @@ If the application would be commercial, it absolutely should use end-to-end encr
 
 <a name="building"></a>
 
-## 2. Building Details
+## 2. Building
 
 Because the timeline and scale of the project is small, we decided not to use container technology because we are not familiar with any. The programming language of the project is Python and TCP protocol is used for communication between Python sockets used in the project.
 
 <a name="getting_started"></a>
 
-### 3. Getting Started:
+### 2.1 Getting Started:
 
 Instructions on setting up your project locally.
 
@@ -174,13 +174,13 @@ The program can be closed with command
 
 <a name="testing"></a>
 
-## 4. Testing
+## 3. Testing
 
 Testing of the application was started with testing functionalities of the program. First, we tested how to program handles different inputs for IP address and port. We found a bug of handling those and added try/except structure and loop to check if the inputs are correct. Also, we tested different inputs for selection, peer connection, group joining and leaving. Many functionalities were working correctly right away, but some issues needed to be fixed and tested again. 
 
 <a name="latency"></a>
 
-### 5. Latency tests
+### 3.1 Latency tests
 
 We tested latency using Python timeit module. Both group joining and leaving latencies were good.
 
@@ -221,7 +221,7 @@ Latency stayed also stabile eventhough two peers were joining to the group at th
 
 <a name="unit_tests"></a>
 
-### 6. Unit Test cases
+### 3.2 Unit Test cases
 
 ### Test case statistics
 
@@ -325,7 +325,7 @@ Server handles updating peers correctly as well.
 
 <a name="stress"></a>
 
-### 8. Stress test
+### 3.3 Stress test
 
 We tested how much peers the group handling server can handle. The server worked correctly even with ten connected peers. The test was done manually so with more peers, the test was not tried. 
 
@@ -333,7 +333,7 @@ We tested how much peers the group handling server can handle. The server worked
 
 <a name="acknowledgements"></a>
 
-## 9. Acknowledgments:
+## 4. Acknowledgments:
 
 Mostly used Python modules' documentation 
 
