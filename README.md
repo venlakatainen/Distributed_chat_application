@@ -30,25 +30,7 @@ Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
 ## 1. About the project
 
-### Implemented components:
-
-Detailed description of the system architecture (Application-specific system components):
-- System must have at least three nodes (e.g, containers)
-- Each node must have a role: client, server, peer, broker, etc.
-
-
-Participating nodes must:
-- Exchange information (messages): RPC, client-server, publish/subscribe, broadcast, streaming, etc.
-- Log their behavior understandably: messages, events, actions, etc.
-
-
-Nodes (or their roles) do not have to be identical
-For example, one acts as server, broker, monitor / admin, etc.
-Each node must be an independent entity and (partially) autonomous
-
-
-Detailed descriptions of relevant principles covered in the course (architecture, processes, communication, naming, synchronization, consistency and replication, fault tolerance); irrelevant principles can be left out.
-
+Chachat is the course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
 <a name="implementation"></a>
 
@@ -59,19 +41,19 @@ Our course project is distributed peer-to-peer chat application. Using our appli
 
 **Architecture**:
 
-Our application consists of one server and peers which are communication partners, group members. The application was tested with server and maximum 10 peers taking connection to the server. The server is handling group joining and leaving functionality. Because the architecture is distributed peer-to-peer, peers do not need server to send or receive messages to other peers.
+Our application consists of one server and peers which are communication partners, group members. The application was tested with server and maximum 10 peers taking connection to the server. The server is handling group joining and leaving functionality. Because the architecture is distributed peer-to-peer, peers do not need server to send or receive messages to other peers. That means that peers can communicate with each other even though the server is not available.
 
 
 
 **Communication**:
 
-The peers and server changes information using TCP protocol. For the communication, the IP address and port are needed to connect to the peer. We have added error handling to communication if group member (peer) or server is not available for the communication. The interaction pattern in the application is object-based.
+The peers and server changes information using TCP protocol using Python sockets. For the communication, the IP address and port are needed to connect to the peer. We have added error handling to communication if group member (peer) or server is not available for the communication. The interaction pattern in the application is object-based.
 
 
 
 **Naming**:
 
-The peers needs the IP address and ports for communication. The naming scheme is attribute-based due to server's need to differentiate each peer. Also, the private message peers are identified using IPs and ports. However,the IP addresses and ports as a name of the peer can be seen also as a flat names, because those are not so human readable.
+The peers needs the IP address and ports for communication. The naming scheme is attribute-based due to server's need to differentiate each peer. Also, the private message peers are identified using IPs and ports. However,the IP addresses and ports as a name of the peer can be seen also as a flat names, because those are not so human readable. If the alias is connected to IP and Port, the naming scheme can be seen as attribute based and structured because aliases are human-readable and connected to IP and Port that are values of the alias attribute.
 
 
 
@@ -83,13 +65,13 @@ The peer handles coming messages so that the peers that connect to the peer firs
 
 **Consistency and Replication**:
 
-The application uses data-centric consistency model and data replication is used as well, because instead of saving the group information only in the server, also the peers have information of the group members. Also, because the server update all the group members at the same time and right away of the group changes (someone joins or leaves from the group), the replication can be seen active. Instead of using database as storage (due to already used project hours) the information of the group members is saved to text file as a json object.
+The application uses data-centric consistency model and data replication is used as well, because instead of saving the group information only in the server, also the peers have information of the group members in their json file. Also, because the server update all the group members at the same time and right away of the group changes (someone joins or leaves from the group), the replication can be seen active. Instead of using database as storage (due to already used project hours) the information of the group members is saved to json file. Also, when peer/user open the application, the program asks the up to the date information of the groups from the server. With this can be handled if someone leaves or joins group when the other peer is not connected or in use.
 
 
 
 **Fault Tolerance**:
 
-We have implemented error handling for the situation where the peer or the server is not available. TCP protocol has built-in fault mitigation that simplifies our work.
+We have implemented error handling for the situation where the peer or the server is not available. TCP protocol has built-in fault mitigation that simplifies our work. Basic error handlind is implemented as well.
 
 
 
@@ -98,13 +80,6 @@ We have implemented error handling for the situation where the peer or the serve
 If the application would be commercial, it absolutely should use end-to-end encrpytion in communication but unfortunately we did not have enough time to implement that.
 
 
-
-## Built with:
-Detailed description of the system functionality and how to run the implementation 
-
-- If you are familiar with a particular container technology, feel free to use it (Docker is not mandatory)
-- Any programming language can be used, such as: Python, Java, JavaScript, ..
-- Any communication protocol / Internet protocol suite can be used: HTTP(S), MQTT, AMQP, CoAP, ..
 
 <a name="building"></a>
 
@@ -122,46 +97,86 @@ First, you should check that needed Python libraries are installed.
 
 The needed libraries are: socket, threading, sys, datetime, json, os, timeit and logging
 
-To run application, use cmd to run client.py script. When starting the application the script asks you to input your port that can be used to connect sockets. Please note, that the script uses also port input +1 and -1 to run sockets. Also, if you want to use group message functionality and you have not joined group before, the server script is needed as well. In commercial application, the script should be run by the service provider but in our more like proof-of-concept case, some user should run the server script.
+To run application, use cmd to run client.py script with command. 
+
+```command
+python client.py [port number]
+```
+
+The port in the command is used to connect sockets. Please note, that the script uses also port input +1 and -1 to run sockets. Also, if you want to use group message functionality and you have not joined group before, the server script is needed as well. In commercial application, the script should be run by the service provider but in our more like proof-of-concept case, some user should run the server script.
+
+The server script can be run with command
+
+```command
+python server.py
+```
 
 When you have started the application and input your port, you can choose if you want to add alias, manage groups, send group message or send private message. If you select group management, you need to input the group that you want to join/leave or you can list groups. The server sends the other group members back to you if the joining was successful and there was other members in the group already. Also, the other group members are informed of your joining or leaving.
 
-When you belong to some group, you can use the name of the group to send messages to the other members. Then you should select the second option in the application. The application asks you to enter group name and message and it will send the message all the members. 
+To list all commands type
 
-There is also a possibility to send private messages to other users. For that, you need the IP address and port of the other user or alias. 
+```command
+/help
+```
 
-You can get help to using application with command /help.
+To join, leave or list groups type
 
-Commands of the application are:
+```command
+/s
+```
 
-- /s : Start group management
-- /g [group_name] [message]: Send message to a group
-- /p [ip:port] [message]: Send private message
-- /a [ip:port] [alias]: Add alias
-- /pa [alias] [message]: Send private message using alias
-- /exit: Exit the program
+After that to join use command
+
+```command
+/join [group_name]
+```
+
+Leave group with command
+
+```command
+/leave [group_name]
+```
+
+and list groups that you belong with command
+
+```command
+/list
+```
+
+When you belong to some group, you can use the name of the group to send messages to the other members. To send group message use command below. group_name is the name of the group and message the message you want to send
+
+```command
+/g [group_name] [message]
+```
+
+There is also a possibility to send private messages to other users. Private message can be sent in two different ways, with IP address and port or alias. Those can be done with commands
+
+```command
+/p [ip:port] [message]
+```
+
+```command
+/pa [alias] [message]
+```
+
+Finally, the alias can be added with command
+
+```command
+/a [ip:port] [alias]
+```
+
+The program can be closed with command
+
+```command
+/exit
+```
+
 
 <a name="testing"></a>
 
 ## 4. Testing
 
 Testing of the application was started with testing functionalities of the program. First, we tested how to program handles different inputs for IP address and port. We found a bug of handling those and added try/except structure and loop to check if the inputs are correct. Also, we tested different inputs for selection, peer connection, group joining and leaving. Many functionalities were working correctly right away, but some issues needed to be fixed and tested again. 
-
-### Results of the tests: ------------>>>> TO BE DONE
-Detailed description of the system evaluation
-Evaluate your implementation using selected criteria, for example:
-- Number of messages / lost messages, latencies, ...
-- Request processing with different payloads, ..
-- System throughput, ..
-
-
-Design two evaluation scenarios that you compare with each other, for example:
-- Small number / large number of messages
-- Small payload / big payload
-
-Collect numerical data of test cases:
-- Collecting logs of container operations
-- Conduct simple analysis for documentation purposes (e.g. plots or graphs)
 
 <a name="latency"></a>
 
@@ -212,7 +227,7 @@ Latency stayed also stabile eventhough two peers were joining to the group at th
 
 | Passed in first try | Passed after fix | Total number of cases |
 |----|----|---|
-| 9 | 2 | 11 |
+| 10 | 2 | 12 |
 
 **Test case: Wrong input given for IP address and/or port**
 - Result: Value error, socket.gaierror
@@ -289,6 +304,11 @@ Server handles updating peers correctly as well.
 
 ![Testcase_12](/images/TC12_server.PNG)
 
+**Test case: invalid server command after UI implementation**
+
+- Result: handled correctly -> passed with the first try
+
+![Testcase_18](/images/TC18.PNG)
 
 <a name="stress"></a>
 
