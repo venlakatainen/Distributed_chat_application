@@ -21,7 +21,7 @@ Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
     * [3.2 Unit Tests](#unit_tests)
 
-    * [3.3 Strss Test](#stress)
+    * [3.3 Stress Test](#stress)
 
 - [4. Acknowledgements](#acknowledgements)
 
