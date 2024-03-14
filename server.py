@@ -42,18 +42,17 @@ def receive_data(conn, address):
             update_group_members(group_to_join, group_info)
     elif rec_json["cmd"] == "leave":
         group_to_leave = rec_json["group"]
-        group_info = leave_from_group(group_to_leave, address[0], str(int(address[1])-2))
+        group_info, msg = leave_from_group(group_to_leave, address[0], str(int(address[1])-2))
         
         if group_info == False:
             logging.info("Peer leaving not done")
-            data=json.dumps({"status": "failure", "message": "Leaving group unsuccessful"}).encode()
+            data=json.dumps({"status": "failure", "message": msg}).encode()
             conn.sendall(data)
         else:
-            logging.info("Peer removed from the group")
             # send done mark to the peer
-            data=json.dumps({"status": "success", "message": "Peer removed from the group"}).encode()
+            data=json.dumps({"status": "success", "message": msg}).encode()
             conn.sendall(data)
-            update_group_members(group_to_leave, group_info)
+            update_group_members(group_to_leave, msg)
     elif rec_json["cmd"] == "list":
         # read group information from file
         with open(server_file) as group_file:
@@ -91,14 +90,16 @@ def leave_from_group (group_name, socket_ip, socket_port):
             # remove group if there is no members anymore
             if len(groups[group_name]) == 0:
                 groups.pop(group_name)
+        else:
+            return False, "Peer not in the group."
     else:
-        return False
+        return False, "Group doesn't exist."
 
     # update group information to the file
     group_file = open(server_file, "w")
     data = json.dump(groups, group_file)
     group_file.close()
-    return members
+    return True, members
 
 
 # function to handle joining groups -> add peer to the group  

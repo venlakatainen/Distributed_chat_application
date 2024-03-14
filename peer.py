@@ -3,6 +3,7 @@ import threading
 import json
 import os
 import logging
+import sys
 from message import Message
 from screen import Screen
 
@@ -36,7 +37,7 @@ def receive_data(s: socket.socket, address: str) -> None:
         msg = Message.from_json(jsonobj)
         
         # send ack
-        s.sendall({"cmd":"ack"}.encode())
+        s.sendall(json.dumps({"cmd":"ack"}).encode())
 
         screen.print(msg)
             
@@ -153,7 +154,7 @@ def handle_server_connection() -> None:
     if args[0] == "/join":
         group_to_join = args[1]
         if from_server["status"] == "failure":
-            screen.print(Message(f"You are already in group {group_to_join}", "System"))
+            screen.print(Message(from_server['message'], "System"))
         
         else:    
             # update group information
@@ -165,12 +166,12 @@ def handle_server_connection() -> None:
             
             if leave_from_group(group_to_leave) == False:
                 logging.info("Leaving not successful")
-                screen.print(Message("Leaving not successful", "System"))
+                screen.print(Message(from_server["message"], "System"))
             else:    
                 screen.print(Message(f"You left from group {group_to_leave}", "System"))
                 logging.info("Leaving done")
         else:
-            screen.print(Message("Leaving not successful", "System"))
+            screen.print(Message(from_server["message"], "System"))
     elif args[0] == "/list":
         with open(file_name, "w") as group_file:
             group_file.write(json.dumps(from_server))
@@ -191,8 +192,7 @@ def leave_from_group (group_name) -> bool:
 
     # check if group exists
     if group_name in groups.keys():
-       groups.pop(group_name)
-     
+       groups.pop(group_name)  
     else:
         logging.info("pop false")
         return False
@@ -204,18 +204,17 @@ def leave_from_group (group_name) -> bool:
     
     
 # create sockets for group message    
-def sockets_for_group_members(mem_of_group: list, msg: str) -> None:
+def sockets_for_group_members(mem_of_group: list, msg: str, group_to_send_msg: str) -> None:
     # create sockets for all group members
     for i in range(len(mem_of_group)):
         peer_address = mem_of_group[i][0]
         peer_port = int(mem_of_group[i][1])
-        screen.print(peer_port)
         try:
             peer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             peer_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             peer_socket.bind((own_ip, own_port-2))
             peer_socket.connect((peer_address,peer_port))
-            send_message(peer_socket, msg)
+            send_message(peer_socket, Message(msg, f"{own_ip}:{own_port}", group=group_to_send_msg))
             
         except ConnectionRefusedError:
             screen.print(Message(f"{mem_of_group[i]} not available.", "System"))
@@ -230,10 +229,12 @@ if __name__ == '__main__':
             #screen.print(Message("Enter your own IP", "System"))
             #own_ip = input()
             own_ip = "127.0.0.1"
-            screen.print(Message("Enter your own port", "System"))
-            own_port = int(input())
+            own_port = int(sys.argv[1])
+            #screen.print(Message("Enter your own port", "System"))
+            #own_port = int(input())
         except ValueError:
             screen.print(Message("Port should be number", "System"))
+            exit(1)
 
         # create socket
         try:
@@ -246,6 +247,7 @@ if __name__ == '__main__':
             break
         except:
             screen.print(Message("Invalid IP or port was given", "System"))
+            exit(1)
         
     # create needed logs
     # create filename to save group information
@@ -281,6 +283,7 @@ if __name__ == '__main__':
         
         select = input()
         if select == "":
+            screen.refresh()
             continue
         args = select.split(" ")
         
@@ -305,7 +308,7 @@ if __name__ == '__main__':
             groups = data
             if group_to_send_message in groups.keys():
                 members = groups[group_to_send_message]
-                sockets_for_group_members(members, message)  
+                sockets_for_group_members(members, message, group_to_send_message)  
             else:
                 screen.print(Message("Group not found", "System"))
 
