@@ -207,3 +207,41 @@ INFO:root:{'cmd': 'list'}
 INFO:root:Connection from: ('127.0.0.1', 5002)
 INFO:root:{'cmd': 'list'}
 INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:{'cmd': 'list'}
+INFO:root:Connection from: ('127.0.0.1', 6002)
+INFO:root:{'cmd': 'list'}
+INFO:root:Connection from: ('127.0.0.1', 6002)
+INFO:root:{'cmd': 'join', 'group': 'testausta'}
+INFO:root:[('127.0.0.1', '6000')]
+INFO:root:b'{"group": "testausta", "members": [["127.0.0.1", "6000"]]}'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:{'cmd': 'join', 'group': 'testausta'}
+INFO:root:[['127.0.0.1', '6000'], ('127.0.0.1', '5000')]
+INFO:root:b'{"group": "testausta", "members": [["127.0.0.1", "6000"], ["127.0.0.1", "5000"]]}'
+INFO:root:b'{"group": "testausta", "members": [["127.0.0.1", "6000"], ["127.0.0.1", "5000"]]}'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:{'cmd': 'list'}
+INFO:root:Connection from: ('127.0.0.1', 6002)
+INFO:root:{'cmd': 'list'}
+INFO:root:Connection from: ('127.0.0.1', 5002)
+INFO:root:{'cmd': 'leave', 'group': 'testausta'}
+INFO:root:b'{"group": "testausta", "members": [["127.0.0.1", "6000"]]}'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 6002)
+INFO:root:{'cmd': 'list'}
+INFO:root:Connection from: ('127.0.0.1', 7002)
+INFO:root:{'cmd': 'list'}
+INFO:root:Connection from: ('127.0.0.1', 7002)
+INFO:root:{'cmd': 'join', 'group': 'rensselit'}
+INFO:root:[('127.0.0.1', '7000')]
+INFO:root:b'{"group": "rensselit", "members": [["127.0.0.1", "7000"]]}'
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 7002)
+INFO:root:{'cmd': 'leave', 'group': 'rensselit'}
+INFO:root:group info sent
+INFO:root:Connection from: ('127.0.0.1', 7002)
+INFO:root:{'cmd': 'leave', 'group': 'rensselit'}
+INFO:root:Peer leaving not done

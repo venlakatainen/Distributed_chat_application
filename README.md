@@ -227,7 +227,7 @@ Latency stayed also stabile eventhough two peers were joining to the group at th
 
 | Passed in first try | Passed after fix | Total number of cases |
 |----|----|---|
-| 10 | 2 | 12 |
+| 12 | 2 | 14 |
 
 **Test case: Wrong input given for IP address and/or port**
 - Result: Value error, socket.gaierror
@@ -309,6 +309,19 @@ Server handles updating peers correctly as well.
 - Result: handled correctly -> passed with the first try
 
 ![Testcase_18](/images/TC18.PNG)
+
+**Test case: Successfull group joining and leaving after UI implementation**
+
+-Result: Passed in first try
+
+![Testcase_19](/images/TC19.PNG)
+
+**Test case: group leaving with error handled succesfully**
+
+- Result: Passed in first try
+
+![Testcase_20](/images/TC20.PNG)
+
 
 <a name="stress"></a>
 
