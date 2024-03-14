@@ -315,12 +315,7 @@ if __name__ == '__main__':
                 # group message
                 if (args[0] == "/g"):
                     group_to_send_message = args[1]
-                    #screen.print(Message("Enter group name", "System"))
-                    #group_to_send_message = input()
-
                     message = " ".join(args[2:])
-                    #screen.print(Message("Enter message", "System"))
-                    #message = input()
 
                     with open(file_name) as group_file:
                         data = json.load(group_file)
@@ -334,21 +329,8 @@ if __name__ == '__main__':
 
                 # private message
                 elif (args[0] == "/p"):
-                    #screen.print(Message("Enter IP address of the friend", "System"))
-                    #peer_address = input()
                     peer_address, peer_port = args[1].split(":")
                     peer_port = int(peer_port)
-
-                    #try:
-                    #    screen.print(Message("Enter port of the friend", "System"))
-                    #    peer_port = int(input())
-                    #except ValueError:
-                    #    screen.print(Message("Port should be number", "System"))
-                    #    continue
-
-                    #screen.print(Message("Enter message", "System"))
-                    #text = input()
-                    #message = Message(text, f"{own_ip}:{own_port}")
 
                     message = Message(" ".join(args[2:]), f"{own_ip}:{own_port}")
 
@@ -365,14 +347,6 @@ if __name__ == '__main__':
 
                 # add alias
                 elif (args[0] == "/a"):
-                    #screen.print(Message("Add friend alias", "System"), Message("Enter IP address of the friend", "System"))
-                    #friend_ip = input()
-                    
-                    #screen.print(Message("Enter port of the friend", "System"))
-                    #friend_port = input()
-
-                    #screen.print(Message("Enter alias", "System"))
-                    #alias = input()
 
                     friend_ip, friend_port = args[1].split(":")
                     friend_port = int(friend_port)
@@ -393,8 +367,6 @@ if __name__ == '__main__':
 
                 # private message using alias
                 elif (args[0] == "/pa"):
-                    #screen.print(Message("Enter alias", "System"))
-                    #alias = input()
                     alias = args[1]
 
                     try:
