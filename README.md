@@ -2,6 +2,8 @@
 
 Course project of Distributed Systems course by Juho Bruun and Venla Katainen
 
+Link to repository: https://github.com/venlakatainen/Distributed_chat_application
+
 ## Industry track
 
 ## Project Title: Distributed peer-to-peer chat application
